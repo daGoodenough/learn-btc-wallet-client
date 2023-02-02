@@ -19,3 +19,11 @@ code {
 .navbar {
   background-color: var(--primary);
 }
+
+.nav-login {
+  color: white;
+}
+
+#basic-nav-dropdown {
+  color: white;
+}
