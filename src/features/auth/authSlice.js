@@ -14,12 +14,17 @@ export const authSlice = createSlice({
   initialState,
   reducers: {
     authUser: (state, action) => {
-      return action.payload;
+      const { token, email, username } = action.payload;
+      return {
+        token,
+        email,
+        username,
+      };
     },
     authError: (state, action) => {
       state.errorMessage = action.payload;
-    }
-  }
+    },
+  },
 });
 
 export const localLogin = (event, callback) => dispatch => {
