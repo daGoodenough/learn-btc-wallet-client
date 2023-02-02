@@ -2,6 +2,7 @@ import {Route, Routes} from 'react-router-dom';
 
 import Home from '../features/homepage/Home';
 import Login from '../features/auth/Login';
+import Signup from '../features/auth/Signup';
 
 const Router = () => {
   return (
@@ -15,6 +16,11 @@ const Router = () => {
         exact
         path='/login'
         element={<Login/>}
+      />
+      <Route
+        exact
+        path='/signup'
+        element={<Signup/>}
       />
     </Routes>
   );
