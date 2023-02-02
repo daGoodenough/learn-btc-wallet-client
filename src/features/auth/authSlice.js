@@ -23,7 +23,10 @@ export const authSlice = createSlice({
     },
     signout: (state) => {
       localStorage.removeItem('token');
-      return initialState;
+      return {
+        ...initialState,
+        token: null
+      };
     },
     authError: (state, action) => {
       state.errorMessage = action.payload;
@@ -75,18 +78,18 @@ export const signup = (event, callback) => dispatch => {
 
 export const fetchCurrentUser = () => dispatch => {
   axios
-  .get(`${BASE_URL}/auth/current_user`, {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem('token')}`
-    }
-  })
-  .then((response) => {
-    localStorage.setItem('token', response.data.token);
-    dispatch(authUser(response.data))
-  })
-  .catch((error) => {
-    dispatch(authError(error.response?.status || 400))
-  })
+    .get(`${BASE_URL}/auth/current_user`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+      }
+    })
+    .then((response) => {
+      localStorage.setItem('token', response.data.token);
+      dispatch(authUser(response.data))
+    })
+    .catch((error) => {
+      dispatch(authError(error.response?.status || 400))
+    })
 }
 
 export const { authUser, authError, signout } = authSlice.actions;
