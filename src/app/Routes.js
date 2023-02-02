@@ -1,8 +1,7 @@
 import {Route, Routes} from 'react-router-dom';
 
-import Home from './Home';
-import Login from './auth/Login';
-import PrivateKey from './PrivateKey';
+import Home from '../features/homepage/Home';
+import Login from '../features/auth/Login';
 
 const Router = () => {
   return (
@@ -16,11 +15,6 @@ const Router = () => {
         exact
         path='/login'
         element={<Login/>}
-      />
-      <Route 
-        exact
-        path='/generate-privkey'
-        element={<PrivateKey/>}
       />
     </Routes>
   );

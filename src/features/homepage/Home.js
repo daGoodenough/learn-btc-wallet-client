@@ -1,6 +1,6 @@
 import { Container } from 'react-bootstrap';
 
-import Banner from './header/Banner';
+import Banner from './Banner';
 
 const Home = () => {
   return (

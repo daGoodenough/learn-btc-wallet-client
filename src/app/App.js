@@ -1,5 +1,5 @@
-import Routes from './components/Routes';
-import TopNav from './components/header/TopNav';
+import Routes from './Routes';
+import TopNav from './TopNav';
 
 function App() {
   return (
