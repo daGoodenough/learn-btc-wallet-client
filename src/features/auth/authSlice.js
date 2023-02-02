@@ -21,7 +21,8 @@ export const authSlice = createSlice({
         username,
       };
     },
-    authSignout: (state) => {
+    signout: (state) => {
+      localStorage.removeItem('token');
       return initialState;
     },
     authError: (state, action) => {
@@ -72,11 +73,6 @@ export const signup = (event, callback) => dispatch => {
     })
 }
 
-export const signout = () => dispatch => {
-  localStorage.removeItem('token');
-  dispatch(authSignout())
-}
-
-export const { authUser, authError, authSignout } = authSlice.actions;
+export const { authUser, authError, signout } = authSlice.actions;
 
 export default authSlice.reducer;
