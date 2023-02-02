@@ -69,8 +69,24 @@ export const signup = (event, callback) => dispatch => {
       callback();
     })
     .catch((error) => {
-      dispatch(authError(error.response?.statue || 400));
+      dispatch(authError(error.response?.status || 400));
     })
+}
+
+export const fetchCurrentUser = () => dispatch => {
+  axios
+  .get(`${BASE_URL}/auth/current_user`, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('token')}`
+    }
+  })
+  .then((response) => {
+    localStorage.setItem('token', response.data.token);
+    dispatch(authUser(response.data))
+  })
+  .catch((error) => {
+    dispatch(authError(error.response?.status || 400))
+  })
 }
 
 export const { authUser, authError, signout } = authSlice.actions;
