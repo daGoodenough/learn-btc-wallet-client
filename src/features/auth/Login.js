@@ -1,7 +1,7 @@
-import { authUser } from './authSlice';
-import { Card, Form, Container, Row, Col, Button } from 'react-bootstrap';
+import { localLogin } from './authSlice';
+import { Card, Form, Container, Row, Col, Button, Nav } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { InfoCircle } from 'react-bootstrap-icons';
 
 function Login() {
@@ -10,7 +10,7 @@ function Login() {
   const navigate = useNavigate();
 
   const handleLocalLogin = (e) => {
-    dispatch(authUser(e, () => {
+    dispatch(localLogin(e, () => {
       navigate('/')
     }));
   };
@@ -20,10 +20,17 @@ function Login() {
       <Row className="align-items-center justify-content-center">
         <Col md={5}>
           <Card border="secondary" className="shadow-lg p-3 mb-5 bg-body-tertiary rounded ">
+            <Card.Header>
+              <Nav fill variant="tabs" defaultActiveKey="login">
+                <Nav.Item>
+                  <Nav.Link eventKey="login" as={Link} to={'/login'}>Log In</Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                  <Nav.Link eventKey="signup" as={Link} to={'/signup'} >Sign Up</Nav.Link>
+                </Nav.Item>
+              </Nav>
+            </Card.Header>
             <Card.Body>
-              <Card.Title className='text-center'>
-                Sign In
-              </Card.Title>
               <Form onSubmit={(e) => handleLocalLogin(e)} className='d-flex flex-column'>
                 <Form.Group className="m-3">
                   <Form.Label>Email address</Form.Label>
@@ -38,8 +45,8 @@ function Login() {
                 </Button>
               </Form>
               {
-                (errorMessage === 401 || errorMessage === 404) 
-                && <div className='login-error'><InfoCircle/> Incorrect username or password</div>
+                (errorMessage === 401 || errorMessage === 404)
+                && <div className='login-error'><InfoCircle /> Incorrect username or password</div>
               }
             </Card.Body>
           </Card>

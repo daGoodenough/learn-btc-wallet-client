@@ -1,23 +1,47 @@
-import {createSlice} from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
+import axios from 'axios';
+const BASE_URL = process.env.REACT_APP_API_HOST
 
 const initialState = {
-  authenticated: localStorage.getItem('token') || '',
+  token: localStorage.getItem('token') || '',
   errorMessage: null,
-  userId: '',
   email: '',
+  username: '',
 };
 
 export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    authUser: (state) => {
-      debugger;
-      state = state;
+    authUser: (state, action) => {
+      return action.payload;
+    },
+    authError: (state, action) => {
+      state.errorMessage = action.payload;
     }
   }
 });
 
-export const {authUser,} = authSlice.actions;
+export const localLogin = (event, callback) => dispatch => {
+  event.preventDefault();
+  const email = event.currentTarget[0].value
+  const password = event.currentTarget[1].value
+
+  axios
+    .post(`${BASE_URL}/auth/login`, {
+      email,
+      password,
+    })
+    .then((response) => {
+      localStorage.setItem("token", response.data.token);
+      dispatch(authUser(response.data));
+      callback();
+    })
+    .catch((error) => {
+      dispatch(authError(error.response?.status || 400));
+    });
+}
+
+export const { authUser, authError } = authSlice.actions;
 
 export default authSlice.reducer;
