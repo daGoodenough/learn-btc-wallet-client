@@ -1,5 +1,7 @@
 import {Nav, Navbar, NavDropdown, Offcanvas} from 'react-bootstrap';
 
+import KeysList from './KeysList';
+
 const OffcanvasNav = () => {
   return (
     <>
@@ -17,9 +19,7 @@ const OffcanvasNav = () => {
             <Nav className="justify-content-end flex-grow-1 pe-3">
               <Nav.Link href="#action1">Home</Nav.Link>
               <Nav.Link href="#action2">Keys</Nav.Link>
-              <div>
-                {}
-              </div>
+              <KeysList/>
               <NavDropdown
                 title="Keys"
                 id={`offcanvasNavbarDropdown-expand-sm`}
