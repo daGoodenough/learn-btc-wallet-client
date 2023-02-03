@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 import { useState } from 'react';
 
 import CreateKeyModal from '../keys/CreateKeyModal';
+import CreateWalletModal from '../wallets/CreateWalletModal';
 
 const OffCanvasListItem = ({ item, itemType, placeholder }) => {
   const [modalShow, setModalShow] = useState(false)
@@ -10,10 +11,19 @@ const OffCanvasListItem = ({ item, itemType, placeholder }) => {
     return (
       <>
         <button className="offcanvas-list-item" onClick={() => setModalShow(true)}>+ Create a {itemType}</button>
-        <CreateKeyModal
-          show={modalShow}
-          onHide={() => setModalShow(false)}
-        />
+        {itemType === 'key' &&
+          <CreateKeyModal
+            show={modalShow}
+            onHide={() => setModalShow(false)}
+          />
+          }
+          {
+            itemType === 'wallet' &&
+            <CreateWalletModal
+              show={modalShow}
+              onHide={() => setModalShow(false)}
+            />
+          }
       </>
     )
   };

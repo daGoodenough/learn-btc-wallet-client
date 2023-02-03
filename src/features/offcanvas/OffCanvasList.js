@@ -26,7 +26,7 @@ const OffCanvasList = ({ listType }) => {
   return (
     <>
       {listItems}
-      <OffCanvasListItem itemType={listType} key={0} placeholder={true} />
+      <OffCanvasListItem itemType={listType} key={listType} placeholder={true} />
     </>
   );
 }
