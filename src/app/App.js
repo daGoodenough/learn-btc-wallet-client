@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { fetchCurrentUser } from '../features/auth/authSlice';
 import { fetchUserKeys } from '../features/keys/keySlice';
+import { fetchUserWallets } from '../features/wallets/walletSlice';
 
 function App() {
   const dispatch = useDispatch();
@@ -20,6 +21,7 @@ function App() {
   useEffect(() => {
     if (token) {
       dispatch(fetchUserKeys());
+      dispatch(fetchUserWallets());
     }
   }, []);
 
