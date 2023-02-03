@@ -14,34 +14,36 @@ const TopNav = () => {
   }
 
   return (
-    <Navbar variant="dark" expand="xs" collapseOnSelect>
-      <Container>
-        <div>
-          <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-sm`} />
-          <Navbar.Brand href="#home">Learn BTC Wallet</Navbar.Brand>
-        </div>
-        <OffcanvasNav />
-        {
-          username ? (
-            <NavDropdown title={username} id="basic-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">Keys</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">
-                TX History
-              </NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">Wallets</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item onClick={handleSignout}>
-                Signout
-              </NavDropdown.Item>
-            </NavDropdown>
-          ) : (
-            <Nav>
-              <Nav.Link className="nav-login" as={Link} to={'/login'}>Login</Nav.Link>
-            </Nav>
-          )
-        }
-      </Container>
-    </Navbar>
+    <>
+      <Navbar variant="dark" expand="xs" collapseOnSelect>
+        <Container>
+          <div>
+            <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-sm`} />
+            <Navbar.Brand href="#home">Learn BTC Wallet</Navbar.Brand>
+          </div>
+      <OffcanvasNav />
+          {
+            username ? (
+              <NavDropdown title={username} id="basic-nav-dropdown">
+                <NavDropdown.Item href="#action/3.1">Keys</NavDropdown.Item>
+                <NavDropdown.Item href="#action/3.2">
+                  TX History
+                </NavDropdown.Item>
+                <NavDropdown.Item href="#action/3.3">Wallets</NavDropdown.Item>
+                <NavDropdown.Divider />
+                <NavDropdown.Item onClick={handleSignout}>
+                  Signout
+                </NavDropdown.Item>
+              </NavDropdown>
+            ) : (
+              <Nav>
+                <Nav.Link className="nav-login" as={Link} to={'/login'}>Login</Nav.Link>
+              </Nav>
+            )
+          }
+        </Container>
+      </Navbar>
+    </>
   );
 }
 
