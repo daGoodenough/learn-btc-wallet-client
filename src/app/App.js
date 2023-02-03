@@ -21,7 +21,7 @@ function App() {
     if (token) {
       dispatch(fetchUserKeys());
     }
-  }, [keys]);
+  }, []);
 
   return (
     <div className="App">
