@@ -1,17 +1,26 @@
 import { Modal, Button, Form, Row, Col } from 'react-bootstrap';
 import { useState } from 'react';
 
-import {generatePrivKey} from './keyUtils';
+import { generatePrivKey, generatePubKey } from './keyUtils';
 
 const CreateKeyModal = (props) => {
   const [privKey, setPrivKey] = useState('');
   const [pubKey, setPubKey] = useState('');
+  const [compressed, setCompressed] = useState(true);
 
-  const handleGeneratePrivKeyClick = async(e) => {
+  const handleGeneratePrivKeyClick = async (e) => {
     e.preventDefault();
     const privKeyObject = await generatePrivKey();
     setPrivKey(privKeyObject.privateKey);
+    setPubKey('')
   }
+
+  const handleGeneratePubKeyClick = async (e) => {
+    e.preventDefault();
+
+    const pubKeyResponse = await generatePubKey(privKey, compressed);
+    setPubKey(pubKeyResponse);
+  } ;
 
   return (
     <Modal
@@ -37,8 +46,8 @@ const CreateKeyModal = (props) => {
                 disabled
               />
             </Form.Group>
-            <Col 
-              className="d-flex justify-content-md-center align-items-center" 
+            <Col
+              className="d-flex justify-content-md-center align-items-center"
               md={2} sm={12}
             >
               <button onClick={(e => handleGeneratePrivKeyClick(e))}>Generate</button>
@@ -49,19 +58,24 @@ const CreateKeyModal = (props) => {
         <Form>
           <Row>
             <Form.Group as={Col} className="mb-3">
-              <Form.Label>Private Key</Form.Label>
+              <Row>
+                <Form.Label as={Col}>Public Key</Form.Label>
+                <Col>
+                
+                  <Form.Check onChange={(e) => setCompressed(e.target.checked)} checked={compressed}  type='switch' label="Compressed" />
+                </Col>
+              </Row>
               <Form.Control
                 value={pubKey}
-                onChange={(e) => setPubKey(e.target.value)}
-                type="text"
-                placeholder=""
+                as='textarea'
+                disabled
               />
             </Form.Group>
             <Col
-              className="d-flex justify-content-center align-items-center"
+              className="d-flex justify-content-md-center align-items-center"
               md={2} sm={12}
             >
-              <button>Generate</button>
+              <button onClick={(e) => handleGeneratePubKeyClick(e)}>Generate</button>
             </Col>
           </Row>
         </Form>
