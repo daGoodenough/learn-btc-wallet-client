@@ -10,22 +10,42 @@ export const keySlice = createSlice({
   reducers: {
     addKeys: (state, action) => {
       return action.payload
+    },
+    addKey: (state, action) => {
+      state.push(action.payload);
     }
   }
 });
 
+const config = {
+  headers: {
+    Authorization: `Bearer ${localStorage.getItem('token')}`
+  },
+}
+
 export const fetchUserKeys = () => dispatch => {
   axios
-    .get(`${BASE_URL}/api/keys`, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`
-      },
-    })
+    .get(`${BASE_URL}/api/keys`, config)
     .then((response) => {
       dispatch(addKeys(response.data.keys))
     })
 };
 
-export const {addKeys} = keySlice.actions;
+export const saveKeyPair =
+  (keyName, privateKey, wif, publicKey) =>
+    dispatch => {
+      axios
+        .post(`${BASE_URL}/api/keys`, {
+        keyName,
+        privateKey,
+        wif,
+        publicKey,
+      },
+        config)
+        .then(response => dispatch(addKey(response.data)))
+        .catch(error => console.error(error))
+    }
+
+export const { addKeys, addKey } = keySlice.actions;
 
 export default keySlice.reducer;
