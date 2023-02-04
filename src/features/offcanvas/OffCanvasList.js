@@ -9,7 +9,7 @@ const OffCanvasList = ({ listType }) => {
   const mapItemsToList = (items) => {
     if (items) {
       return items.map((item) => {
-        return <OffCanvasListItem key={item.id} item={item} itemType={listType}/>;
+        return <OffCanvasListItem key={item._id} item={item} itemType={listType}/>;
       });
     };
     return null;
