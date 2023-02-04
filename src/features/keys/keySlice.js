@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { authConfig as config } from '../../utils/axiosConfigs';
 const BASE_URL = process.env.REACT_APP_API_HOST;
 
 const initialState = [];
@@ -17,11 +18,6 @@ export const keySlice = createSlice({
   }
 });
 
-const config = {
-  headers: {
-    Authorization: `Bearer ${localStorage.getItem('token')}`
-  },
-}
 
 export const fetchUserKeys = () => dispatch => {
   axios
