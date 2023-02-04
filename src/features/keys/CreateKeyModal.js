@@ -8,42 +8,49 @@ import { saveKeyPair } from './keySlice';
 const CreateKeyModal = (props) => {
   const dispatch = useDispatch();
   const [privKey, setPrivKey] = useState({});
-  const [pubKey, setPubKey] = useState({});
+  const [pubKey, setPubKey] = useState({ compressed: '', uncompressed: '' });
   const [compressed, setCompressed] = useState(true);
   const [activePage, setActivePage] = useState(1);
   const [keyName, setKeyName] = useState('');
-
-  console.log(pubKey);
 
   const pagenationItems = [1, 2].map(number => {
     return (
       <Pagination.Item onClick={() => setActivePage(number)} key={number} active={number === activePage}>
         {number}
       </Pagination.Item>
-    )
-  })
+    );
+  });
 
   const handleGeneratePrivKeyClick = async (e) => {
     e.preventDefault();
+
     const privKeyObject = await generatePrivKey();
+
     setPrivKey(privKeyObject);
-    setPubKey({})
-  }
+    setPubKey({ compressed: '', uncompressed: '' })
+  };
 
   const handleGeneratePubKeyClick = async (e) => {
     e.preventDefault();
 
     const pubKeyResponse = await generatePubKey(privKey.privateKey);
+
     setPubKey(pubKeyResponse);
   };
 
   const handleKeySave = () => {
-    const {privateKey} = privKey.privateKey;
-    const publicKey = compressed ? pubKey.compressed : pubKey.uncompressed;
-    const wif = compressed ? privKey.wifCompressed : privKey.wifUncompressed;
+    const { privateKey } = privKey.privateKey;
+
+    const publicKey = compressed ?
+      pubKey.compressed :
+      pubKey.uncompressed;
+
+    const wif = compressed ?
+      privKey.wifCompressed :
+      privKey.wifUncompressed;
 
     dispatch(saveKeyPair(keyName, privateKey, wif, publicKey));
-  }
+  };
 
   if (activePage === 1) {
     return (
