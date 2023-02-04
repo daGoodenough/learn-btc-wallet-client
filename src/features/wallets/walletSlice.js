@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from 'axios';
+import { authConfig } from "../../utils/axiosConfigs";
 const BASE_URL = process.env.REACT_APP_API_HOST;
 
 const initialState = [];
@@ -11,6 +12,9 @@ export const walletSlice = createSlice({
     addWallets: (state, action) => {
       return action.payload;
     },
+    addWallet: (state, action) => {
+      state.push(action.payload);
+    }
   },
 });
 
@@ -27,6 +31,19 @@ export const fetchUserWallets = () => dispatch => {
     .catch(error => console.log(error))
 };
 
-export const {addWallets} = walletSlice.actions;
+export const createWallet = (addrType, keys) => dispatch => {
+  axios
+    .post(
+      `${BASE_URL}/api/wallets/${addrType}`, 
+      {keys, network: 'regtest'}, 
+      authConfig
+      )
+    .then(response => {
+      dispatch(addWallet(response.data))
+    })
+    .catch(error => console.log(error))
+}
+
+export const {addWallets, addWallet} = walletSlice.actions;
 
 export default walletSlice.reducer;
