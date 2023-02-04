@@ -14,7 +14,7 @@ const CreateKeyModal = (props) => {
   const [keyName, setKeyName] = useState('');
   const [errorMessages, setErrorMessages] = useState({})
 
-  const pagenationItems = [1, 2].map(number => {
+  const pagenationItems = [1, 2, 3].map(number => {
     return (
       <Pagination.Item onClick={() => handlePageChange(number)} key={number} active={number === activePage}>
         {number}
@@ -41,8 +41,8 @@ const CreateKeyModal = (props) => {
   };
 
   const handleKeySave = () => {
-    if(!keyName) {
-      return setErrorMessages({keyName: "You must create a key name."});
+    if (!keyName) {
+      return setErrorMessages({ keyName: "You must create a key name." });
     }
     const { privateKey } = privKey.privateKey;
 
@@ -61,9 +61,13 @@ const CreateKeyModal = (props) => {
   const handlePageChange = (number) => {
     if (activePage === 1) {
       if (!(pubKey.compressed && pubKey.uncompressed)) {
-       return setErrorMessages({ pubKey: 'You are required to generate a public key' });
+        return setErrorMessages({ pubKey: 'You are required to generate a public key' });
       };
     };
+
+    if (activePage === 2 && number === 3 && !keyName) {
+      return setErrorMessages({ keyName: "You must name your key." })
+    }
     setActivePage(number);
     setErrorMessages({});
   };
@@ -82,7 +86,7 @@ const CreateKeyModal = (props) => {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <h4>Step 1: Generate a Private Key</h4>
+          <h5>Step 1: Generate a Private Key</h5>
           <Form>
             <Row>
               <Form.Group as={Col} className="mb-3">
@@ -101,7 +105,7 @@ const CreateKeyModal = (props) => {
               </Col>
             </Row>
           </Form>
-          <h4>Step 2: Generate Corresponding Public Key</h4>
+          <h5>Step 2: Generate Corresponding Public Key</h5>
           <Form>
             <Row>
               <Form.Group as={Col} className="mb-3">
@@ -134,6 +138,7 @@ const CreateKeyModal = (props) => {
       </Modal >
     );
   }
+
   if (activePage === 2) {
     return (
       <Modal
@@ -144,11 +149,10 @@ const CreateKeyModal = (props) => {
       >
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
-            Create a Key Pair
+            Name Your Key
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <h4>Save Key Pair</h4>
           <Form>
             <Row>
               <Form.Group as={Col} className="mb-3">
@@ -157,7 +161,41 @@ const CreateKeyModal = (props) => {
                   onChange={(e) => setKeyName(e.target.value)}
                   value={keyName}
                 />
-                  <div className='modal-error-message'>{errorMessages.keyName}</div>
+                <div className='modal-error-message'>{errorMessages.keyName}</div>
+              </Form.Group>
+            </Row>
+
+          </Form>
+        </Modal.Body>
+        <Modal.Footer className='justify-content-around'>
+          <Pagination size='sm'>{pagenationItems}</Pagination>
+          <Button onClick={() => setActivePage(3)}>Next</Button>
+        </Modal.Footer>
+      </Modal >
+    );
+  };
+  if (activePage === 3) {
+    return (
+      <Modal
+        {...props}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title id="contained-modal-title-vcenter">
+          Confirm and Save
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Row>
+              <Form.Group as={Col} className="mb-3">
+                <Form.Label>Key Name</Form.Label>
+                <Form.Control
+                  disabled
+                  value={keyName}
+                />
               </Form.Group>
             </Row>
             <Row>
@@ -192,12 +230,11 @@ const CreateKeyModal = (props) => {
                 />
               </Form.Group>
             </Row>
-            <button onClick={handleKeySave}>Save Key</button>
           </Form>
         </Modal.Body>
         <Modal.Footer className='justify-content-around'>
           <Pagination size='sm'>{pagenationItems}</Pagination>
-          <Button onClick={() => setActivePage(2)}>Next</Button>
+          <Button onClick={handleKeySave}>Save Key</Button>
         </Modal.Footer>
       </Modal >
     );
