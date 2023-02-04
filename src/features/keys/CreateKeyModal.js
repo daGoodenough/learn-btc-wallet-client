@@ -12,10 +12,11 @@ const CreateKeyModal = (props) => {
   const [compressed, setCompressed] = useState(true);
   const [activePage, setActivePage] = useState(1);
   const [keyName, setKeyName] = useState('');
+  const [errorMessages, setErrorMessages] = useState({})
 
   const pagenationItems = [1, 2].map(number => {
     return (
-      <Pagination.Item onClick={() => setActivePage(number)} key={number} active={number === activePage}>
+      <Pagination.Item onClick={() => handlePageChange(number)} key={number} active={number === activePage}>
         {number}
       </Pagination.Item>
     );
@@ -36,9 +37,13 @@ const CreateKeyModal = (props) => {
     const pubKeyResponse = await generatePubKey(privKey.privateKey);
 
     setPubKey(pubKeyResponse);
+    setErrorMessages({});
   };
 
   const handleKeySave = () => {
+    if(!keyName) {
+      return setErrorMessages({keyName: "You must create a key name."});
+    }
     const { privateKey } = privKey.privateKey;
 
     const publicKey = compressed ?
@@ -50,6 +55,17 @@ const CreateKeyModal = (props) => {
       privKey.wifUncompressed;
 
     dispatch(saveKeyPair(keyName, privateKey, wif, publicKey));
+    setErrorMessages({});
+  };
+
+  const handlePageChange = (number) => {
+    if (activePage === 1) {
+      if (!(pubKey.compressed && pubKey.uncompressed)) {
+       return setErrorMessages({ pubKey: 'You are required to generate a public key' });
+      };
+    };
+    setActivePage(number);
+    setErrorMessages({});
   };
 
   if (activePage === 1) {
@@ -92,7 +108,6 @@ const CreateKeyModal = (props) => {
                 <Row>
                   <Form.Label as={Col}>Public Key</Form.Label>
                   <Col>
-
                     <Form.Check onChange={(e) => setCompressed(e.target.checked)} checked={compressed} type='switch' label="Compressed" />
                   </Col>
                 </Row>
@@ -101,6 +116,7 @@ const CreateKeyModal = (props) => {
                   as='textarea'
                   disabled
                 />
+                <div className='modal-error-message'>{errorMessages.pubKey}</div>
               </Form.Group>
               <Col
                 className="d-flex justify-content-md-center align-items-center"
@@ -141,6 +157,7 @@ const CreateKeyModal = (props) => {
                   onChange={(e) => setKeyName(e.target.value)}
                   value={keyName}
                 />
+                  <div className='modal-error-message'>{errorMessages.keyName}</div>
               </Form.Group>
             </Row>
             <Row>
