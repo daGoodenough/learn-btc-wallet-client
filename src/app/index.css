@@ -27,3 +27,8 @@ code {
 #basic-nav-dropdown {
   color: white;
 }
+
+.modal-error-message {
+  color: red;
+  font-weight: bold;
+}
