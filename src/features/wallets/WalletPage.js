@@ -16,22 +16,30 @@ const WalletPage = () => {
   }
 
   return (
-    <Container className='mt-5 wallet-container'>
+    <Container className='mt-2 wallet-container'>
       <Row className='text-center'>
         <h3>Address name</h3>
       </Row>
       <Row className='mt-5'>
-        <Col md={6} sm={12}>
+        <Col xs={8}>
           <div className='wallet-page-address-container'>
-            <h4 className='wallet-page-address'>{wallet?.address}</h4>
             <div className='sub-descriptor'>Address</div>
+            <h4 className='wallet-page-address'>{wallet?.address}</h4>
           </div>
         </Col>
-        <Col md={6} sm={12}>
+        <Col xs={4}>
           <div className='wallet-balance'>
             {wallet.balance || '0 Satoshis'}
 
           </div>
+        </Col>
+      </Row>
+      <Row xs="auto" className='justify-content-between mt-2'>
+        <Col>
+          <Button>Create Transaction</Button>
+        </Col>
+        <Col>
+          <Button onClick={handleFundClick}>Fund Address</Button>
         </Col>
       </Row>
       <Row>
@@ -39,13 +47,11 @@ const WalletPage = () => {
         <div className='section-subtitle'>Key pairs used in this address</div>
         {wallet?.keys ? <WalletKeyList keyIds={wallet.keys} /> : <div>No Keys</div>}
       </Row>
-      <Row xs="auto" className='justify-content-between'>
-        <Col>
-          <Button>Create Transaction</Button>
-        </Col>
-        <Col>
-          <Button onClick={handleFundClick}>Fund Address</Button>
-        </Col>
+      
+      <Row>
+        <div className='section-title'>Transactions</div>
+        <div className='section-subtitle'>UTXOs associated with address</div>
+        {wallet?.keys ? <WalletKeyList keyIds={wallet.keys} /> : <div>No Keys</div>}
       </Row>
     </Container>
   );
