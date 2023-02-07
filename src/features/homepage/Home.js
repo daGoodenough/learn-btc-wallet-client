@@ -6,6 +6,7 @@ import FeaturesNav from './FeaturesNav';
 import WalletsList from './WalletsList';
 import KeysList from './KeysList';
 import TransactionsList from './TransactionsList';
+import ButtonsCreate from './ButtonsCreate';
 
 const Home = () => {
   const [activeTab, setActiveTab] = useState('addresses');
@@ -25,7 +26,7 @@ const Home = () => {
         {activeTab === 'addresses' && <WalletsList />}
         {activeTab === 'keys' && <KeysList />}
         {activeTab === 'transactions' && <TransactionsList />}
-        
+        <ButtonsCreate />
       </Container>
     </>
   );
