@@ -1,19 +1,26 @@
-import { Image } from "react-bootstrap";
+import { useSelector } from "react-redux";
+import {Link} from 'react-router-dom';
 
 const Banner = () => {
+  const { username } = useSelector((state) => state.auth);
+
+  if(username) {
+    return (
+      <header>
+        <h2>Welcome, {username}, to the wallet that <strong>helps you understand</strong>!</h2>
+        <h3>Most elements of the wallet can be <strong>clicked</strong> to <em>learn more</em></h3>
+        <h4><strong>DISCLAIMER**</strong> Do not use any addresses, or key pairs to interact with <em>real</em> bitcoin</h4>
+      </header>
+    );
+  }
+
   return (
     <header>
-      <h1>Welcome to the Bitcoin wallet that <strong>helps you understand</strong>!</h1>
-      <h2>Learn the difference:</h2>
-      <h3>keys and wallets</h3>
-      <h3>address formats</h3>
-      <h2>Learn to construct collaborative multi-sig transactions</h2>
-      <button>Click Here to Create an Account</button>
-      <h4>Logging in will help you keep track of your learning journey</h4>
-      <button>Click Here to Continue as a Guest</button>
-      <h4>Guest data does not get stored</h4>
+      <h2>Welcome to the wallet that <strong>helps you understand</strong>!</h2>
+      <h3>This wallet interacts <em>directly</em> with a Bitcoin Node in regtest mode</h3>
+      <h4><Link to={'/login'}>Login or Create an account</Link> to get started</h4>
     </header>
-  );
+  )
 }
 
 export default Banner;

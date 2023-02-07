@@ -6,8 +6,8 @@ import WalletsList from './WalletsList';
 const Home = () => {
   return (
     <>
-      <Banner />
       <Container>
+        <Banner />
         <WalletsList />
       </Container>
     </>
