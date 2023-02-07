@@ -56,7 +56,14 @@ const CreateWalletModal = (props) => {
               <h5>Step 2: Key(s)</h5>
               <Form.Select aria-label="select keys">
                 <option>Choose which key pair to use</option>
-                {keys.map(key => <option value={key._id}>{key.keyName}</option>)}
+                {
+                  (keys.length > 0) && 
+                  keys.map(key => <option value={key._id}>{key.keyName}</option>)
+                }
+                {
+                  (keys.length === 0 || !keys) &&
+                  <option>No keys available</option>
+                }
               </Form.Select>
             </Form.Group>
 

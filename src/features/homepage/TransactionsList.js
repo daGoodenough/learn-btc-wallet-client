@@ -4,17 +4,18 @@ import { useState } from 'react';
 
 const TransactionsList = () => {
   const {wallets} = useSelector(state => state);
+
+  if (!wallets || wallets.length === 0) {
+    return <h5 className='text-center'>Create a wallet to get started</h5>
+  };
+
   const txes = wallets.reduce((txArray, wallet) => {
     wallet.transactions.forEach(tx => txArray.push(tx))
     return txArray;
   }, []);
 
-  if (!wallets || wallets.length === 0) {
-    return <div>Create a wallet to get started</div>
-  }
-
   if(!txes || txes.length === 0) {
-    return <div>No Transactions... select a wallet to create a transaction</div>
+    return <h5 className='text-center'>No Transactions... select a wallet to create a transaction</h5>
   }
 
   return (

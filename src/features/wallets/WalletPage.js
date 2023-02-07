@@ -11,6 +11,10 @@ const WalletPage = () => {
   const { wallets } = useSelector(state => state);
   const wallet = wallets.find(wallet => wallet._id === walletId);
 
+  if(!wallet) {
+    return <h2 className='text-center'>Wallet not found...</h2>
+  }
+
   const handleFundClick = () => {
     dispatch(fundWallet(wallet.address))
   }

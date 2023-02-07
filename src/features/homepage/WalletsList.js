@@ -6,6 +6,10 @@ const WalletsList = () => {
   const navigate = useNavigate();
   const { wallets } = useSelector(state => state);
 
+  if(!wallets || wallets.length === 0) {
+    return <h5 className='text-center'>No addresses... create one to get started</h5>
+  }
+
   const handleWalletClick = (walletId) => {
     console.log(walletId)
     navigate(`/wallet/${walletId}`)
@@ -13,7 +17,6 @@ const WalletsList = () => {
 
   return (
     <>
-      <h3>Wallets</h3>
       <Table variant='dark' hover responsive>
         <tbody>
           {wallets.map(wallet => {

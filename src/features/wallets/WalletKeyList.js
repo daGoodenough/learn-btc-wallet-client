@@ -5,11 +5,20 @@ import KeyInfoModal from '../keys/KeyInfoModal';
 
 const WalletKeyList = ({ keyIds }) => {
   const userKeys = useSelector(state => state.keys);
-  const addrKeys = keyIds?.map(keyId => userKeys.find(key => key._id === keyId));
+
+  const addrKeys = keyIds?.reduce((keys, keyId) => {
+    const addrKey = userKeys.find(key => key._id === keyId);
+    if(!addrKey) {
+      return keys;
+    };
+    keys.push(addrKey);
+    return keys;
+  }, []);
+
   const [modalShow, setModalShow] = useState(false);
 
   if (!addrKeys || addrKeys.length === 0) {
-    return (<>No Keys</>)
+    return <h5 className='text-center'>No keys available</h5>
   };
   return (
     <>

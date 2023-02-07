@@ -8,8 +8,8 @@ const KeysList = () => {
   const { keys } = useSelector(state => state);
   const [modalShow, setModalShow] = useState(false);
 
-  if (!keys) {
-    return <div>No Keys</div>
+  if (!keys || keys.length === 0) {
+    return <h5 className='text-center'>No keys... create one to get started</h5>
   }
 
   return (
