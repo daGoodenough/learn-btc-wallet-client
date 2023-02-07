@@ -13,15 +13,17 @@ const TopNav = () => {
     dispatch(signout())
   }
 
+  const expand='md'
+
   return (
     <>
-      <Navbar variant="dark" expand="xs" collapseOnSelect>
+      <Navbar variant="dark" expand='xs' collapseOnSelect>
         <Container>
           <div>
-            <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-sm`} />
+            <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${expand}}`} />
             <Navbar.Brand href="#home">Learn BTC Wallet</Navbar.Brand>
           </div>
-      <OffcanvasNav />
+      <OffcanvasNav expand={expand}/>
           {
             username ? (
               <NavDropdown title={username} id="basic-nav-dropdown">

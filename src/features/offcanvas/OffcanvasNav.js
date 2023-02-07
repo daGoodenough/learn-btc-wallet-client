@@ -2,16 +2,17 @@ import { Nav, Navbar, NavDropdown, Offcanvas } from 'react-bootstrap';
 
 import OffCanvasList from './OffCanvasList';
 
-const OffcanvasNav = () => {
+const OffcanvasNav = ({expand}) => {
   return (
     <>
       <Navbar.Offcanvas
-        id={`offcanvasNavbar-expand-sm`}
-        aria-labelledby={`offcanvasNavbarLabel-expand-sm`}
+        id={`offcanvasNavbar-expand-${expand}`}
+        aria-labelledby={`offcanvasNavbarLabel-expand-${expand}`}
         placement="start"
+        backdrop={false}
       >
         <Offcanvas.Header closeButton>
-          <Offcanvas.Title id={`offcanvasNavbarLabel-expand-sm`}>
+          <Offcanvas.Title id={`offcanvasNavbarLabel-expand-${expand}`}>
             Offcanvas
           </Offcanvas.Title>
         </Offcanvas.Header>
