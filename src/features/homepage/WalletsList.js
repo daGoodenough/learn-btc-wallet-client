@@ -1,23 +1,36 @@
-import {Table} from 'react-bootstrap';
+import { Table } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router';
 
 import WalletListItem from './WalletListItem';
 
 const WalletsList = () => {
-  const {wallets} = useSelector(state => state);
-  console.log(wallets);
+  const navigate = useNavigate();
+  const { wallets } = useSelector(state => state);
+
+  const handleWalletClick = (walletId) => {
+    console.log(walletId)
+    navigate(`/wallet/${walletId}`)
+  }
+
   const walletListItems = wallets.map(wallet => {
-    return <WalletListItem key={wallet._id} wallet={wallet}/>
+    return (
+      <WalletListItem
+        navigate={handleWalletClick}
+        key={wallet._id}
+        wallet={wallet}
+      />
+    );
   })
 
   return (
     <>
-    <h3>Wallets</h3>
-    <Table>
-      <tbody>
-      {walletListItems}
-      </tbody>
-    </Table>
+      <h3>Wallets</h3>
+      <Table hover>
+        <tbody>
+          {walletListItems}
+        </tbody>
+      </Table>
     </>
   );
 }
