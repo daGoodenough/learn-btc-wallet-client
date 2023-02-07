@@ -14,6 +14,12 @@ export const walletSlice = createSlice({
     },
     addWallet: (state, action) => {
       state.push(action.payload);
+    },
+    changeBalance: (state, action) => {
+      const wallet = state.find(
+        wallet => wallet.address === action.payload.address
+      );
+      wallet.balance = action.payload.newBalance;
     }
   },
 });
@@ -34,16 +40,33 @@ export const fetchUserWallets = () => dispatch => {
 export const createWallet = (addrType, keys) => dispatch => {
   axios
     .post(
-      `${BASE_URL}/api/wallets/${addrType}`, 
-      {keys, network: 'regtest'}, 
+      `${BASE_URL}/api/wallets/${addrType}`,
+      { keys, network: 'regtest' },
       authConfig
-      )
+    )
     .then(response => {
       dispatch(addWallet(response.data))
     })
     .catch(error => console.log(error))
 }
 
-export const {addWallets, addWallet} = walletSlice.actions;
+export const fundWallet = (address) => dispatch => {
+  axios
+    .post(
+      `${BASE_URL}/api/transactions/fund-wallet`,
+      { address },
+      authConfig
+    )
+    .then(response => {
+      dispatch(changeBalance({ newBalance: response.data, address }))
+    })
+    .catch(error => console.error(error))
+
+  // axios
+  //   .post(`http://regtest-server:8080/1/generate`, {address, blocks: 10}).then(response => console.log(response))
+  
+}
+
+export const { addWallets, addWallet, changeBalance } = walletSlice.actions;
 
 export default walletSlice.reducer;

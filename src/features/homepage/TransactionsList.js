@@ -19,7 +19,7 @@ const TransactionsList = () => {
 
   return (
     <>
-      <Table>
+      <Table responsive>
         <tbody>
           {txes.map(tx => {
             return (

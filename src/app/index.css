@@ -21,6 +21,32 @@ code {
     monospace;
 }
 
+.nav-tabs {
+  border-bottom: none;
+}
+
+a.feature-nav.nav-link {
+  color: var(--font1);
+  font-size: 1.3rem;
+  font-weight: 600;
+  border-color: var(--primary);
+  border-bottom: none;
+}
+
+a.feature-nav.nav-link:hover {
+  border-width: 3px;
+  border-color: var(--primary);
+}
+
+a.feature-nav.nav-link.active,
+a.feature-nav.nav-link.active:hover {
+  background-color: var(--primary);
+  color: var(--font1);
+  border-color: var(--primary);
+  border-width: 1px;
+  border-bottom: none;
+}
+
 .navbar {
   background-color: var(--primary);
 }
@@ -119,6 +145,10 @@ td.key-name {
   border: var(--primary);
 }
 
+.btn-create {
+  min-width: 100px;
+}
+
 .modal-content {
   background-color: var(--background);
   border-color: var(--font1);
@@ -132,7 +162,9 @@ td.key-name {
   border-color: var(--font1);
 }
 
-.form-control:disabled {
+.form-control:disabled,
+.form-control,
+.form-select {
   background-color: var(--font1);
   border: var(--font1);
   color: var(--background);

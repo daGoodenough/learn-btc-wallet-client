@@ -13,7 +13,7 @@ const KeysList = () => {
   }
 
   return (
-    <Table>
+    <Table responsive>
       <tbody>
         {keys.map(key => {
           return (

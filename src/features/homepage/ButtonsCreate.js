@@ -9,10 +9,10 @@ const ButtonsCreate = () => {
 
   return (
     <>
-      <Row className='justify-content-around'>
+      <Row md='auto' className='justify-content-around mt-4'>
         <Button
           onClick={() => setAddrModalShow(true)}
-          md={1} xs={5}
+          xs={5}
           className='btn-create'
           as={Col}
         >
@@ -20,7 +20,7 @@ const ButtonsCreate = () => {
         </Button>
         <Button
           onClick={() => setKeyModalShow(true)}
-          md={1} xs={5}
+          xs={5}
           className='btn-create'
           as={Col}
         >

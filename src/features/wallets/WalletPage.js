@@ -20,7 +20,7 @@ const WalletPage = () => {
       <Row className='text-center'>
         <h3>Address name</h3>
       </Row>
-      <Row className='mt-5'>
+      <Row className='mt-3'>
         <Col xs={8}>
           <div className='wallet-page-address-container'>
             <div className='sub-descriptor'>Address</div>
@@ -29,8 +29,7 @@ const WalletPage = () => {
         </Col>
         <Col xs={4}>
           <div className='wallet-balance'>
-            {wallet.balance || '0 Satoshis'}
-
+            {'0'} sats
           </div>
         </Col>
       </Row>

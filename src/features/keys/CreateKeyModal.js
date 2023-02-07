@@ -80,7 +80,7 @@ const CreateKeyModal = (props) => {
         aria-labelledby="contained-modal-title-vcenter"
         centered
       >
-        <Modal.Header closeButton>
+        <Modal.Header closeButton closeVariant='white'>
           <Modal.Title id="contained-modal-title-vcenter">
             Create a Key Pair
           </Modal.Title>
