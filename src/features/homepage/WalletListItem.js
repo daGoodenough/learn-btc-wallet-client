@@ -1,8 +1,8 @@
 
 
-const WalletListItem = ({wallet}) => {
+const WalletListItem = ({wallet, navigate}) => {
   return (
-    <tr>
+    <tr onClick={() => navigate(wallet._id)}>
       <td>{wallet.address}</td>
       <td>{wallet.keys.map(key => key)}</td>
       <td>{wallet.type}</td>
