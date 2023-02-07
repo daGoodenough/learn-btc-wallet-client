@@ -54,6 +54,8 @@ td {
 .sub-descriptor {
   font-size: 0.75rem;
   color: grey;
+  margin-top: -8px;
+  text-align: right;
 }
 
 .wallet-container {
@@ -65,6 +67,16 @@ td {
 
 .wallet-page-address {
   overflow-wrap: break-word;
+  text-align: right;
+}
+
+.section-title {
+  margin-top: 15px;
+  font-size: 1.6rem;
+}
+
+.section-subtitle {
+  margin-bottom: 15px;
 }
 
 td div.pub-key {

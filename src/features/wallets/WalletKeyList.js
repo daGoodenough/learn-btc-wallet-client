@@ -1,4 +1,4 @@
-import { Table } from 'react-bootstrap';
+import { Table, Col } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 
 const WalletKeyList = ({ keyIds }) => {
@@ -9,6 +9,7 @@ const WalletKeyList = ({ keyIds }) => {
     return (<></>)
   };
   return (
+    <Col>
     <Table variant='dark' borderless>
       <tbody>
         {addrKeys.map(key => {
@@ -31,6 +32,7 @@ const WalletKeyList = ({ keyIds }) => {
         })}
       </tbody>
     </Table>
+    </Col>
   );
 }
 
