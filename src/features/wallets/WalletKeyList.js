@@ -9,16 +9,22 @@ const WalletKeyList = ({ keyIds }) => {
     return (<></>)
   };
   return (
-    <Table borderless responsive>
-      <tbody >
+    <Table variant='dark' borderless>
+      <tbody>
         {addrKeys.map(key => {
           console.log(key)
           return (
             <tr className='d-flex justify-content-between' key={key._id}>
-              <td>{key.keyName}</td>
+              <td className='key-name'>
+                <div>
+                  {key.keyName}
+                </div>
+              </td>
               <td>
-                <div className='pub-key-td'>Pub Key</div>
-                {key.publicKey}
+                <div className='pub-key'>
+                  {key.publicKey}
+                </div>
+                <div className='sub-descriptor'>Pub Key</div>
               </td>
             </tr>
           )

@@ -9,6 +9,8 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: rgb(32, 37, 40);
+  color: rgb(172, 180, 156);
 }
 
 code {
@@ -20,15 +22,70 @@ code {
   background-color: var(--primary);
 }
 
-.nav-login {
+.navbar-brand {
+  color: rgb(114, 110, 110);
+}
+
+/* .nav-login {
   color: white;
 }
 
 #basic-nav-dropdown {
   color: white;
-}
+} */
 
 .modal-error-message {
   color: red;
   font-weight: bold;
+}
+
+tr:hover {
+  cursor: pointer;
+}
+
+tr {
+  background-color: rgb(32, 37, 40);
+}
+
+td {
+  color: rgb(172, 180, 156);
+}
+
+.sub-descriptor {
+  font-size: 0.75rem;
+  color: grey;
+}
+
+.wallet-container {
+  background-color: rgb(20, 21, 22);
+  padding: 5%;
+  border-radius: 8px;
+  box-shadow: 8px 5px 5px rgb(114, 110, 110);
+}
+
+.wallet-page-address {
+  overflow-wrap: break-word;
+}
+
+td div.pub-key {
+  overflow-wrap: anywhere;
+}
+
+td.key-name {
+  min-width: max-content;
+  display: flex;
+  align-items: center;
+}
+
+.btn,
+.btn-primary {
+  background-color: var(--primary);
+  border: var(--primary);
+  color: rgb(114, 110, 110);
+}
+
+.btn:hover,
+.btn-primary:hover {
+  background-color: var(--primary);
+  border: var(--primary);
 }

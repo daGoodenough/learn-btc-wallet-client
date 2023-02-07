@@ -11,9 +11,6 @@ const CreateWalletModal = (props) => {
   const [walletKeys, setWalletKeys] = useState('');
   const [addrType, setAddrType] = useState('');
 
-  console.log(walletKeys)
-  console.log(keys);
-
   const handleWalletCreate = () => {
     dispatch(createWallet(addrType, walletKeys));
   }

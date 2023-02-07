@@ -19,18 +19,25 @@ const WalletPage = () => {
     <Container className='mt-5 wallet-container'>
       <Row>
         <Col md={6} sm={12}>
-          <h3>Wallet name</h3>
+          <h3>Wallet name: {wallet.balance || '0 Satoshis'}</h3>
         </Col>
         <Col md={6} sm={12}>
-          <h4>{wallet?.address}</h4>
+          <h4 className='wallet-page-address'>{wallet?.address}</h4>
+          <div className='sub-descriptor'>Address</div>
         </Col>
       </Row>
       <Row>
         <div>Keys:</div>
-        <WalletKeyList keyIds={wallet?.keys}/>
+        {wallet?.keys ? <WalletKeyList keyIds={wallet.keys} /> : <div>No Keys</div>}
       </Row>
-      <Button>Create Transaction</Button>
-      <Button onClick={handleFundClick}>Fund Wallet</Button>
+      <Row xs="auto" className='justify-content-between'>
+        <Col>
+          <Button>Create Transaction</Button>
+        </Col>
+        <Col>
+          <Button onClick={handleFundClick}>Fund Wallet</Button>
+        </Col>
+      </Row>
     </Container>
   );
 }

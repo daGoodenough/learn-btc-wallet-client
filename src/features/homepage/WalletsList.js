@@ -26,7 +26,7 @@ const WalletsList = () => {
   return (
     <>
       <h3>Wallets</h3>
-      <Table hover>
+      <Table variant='dark' hover>
         <tbody>
           {walletListItems}
         </tbody>
