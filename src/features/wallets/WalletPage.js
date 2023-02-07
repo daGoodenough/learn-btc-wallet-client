@@ -17,17 +17,26 @@ const WalletPage = () => {
 
   return (
     <Container className='mt-5 wallet-container'>
-      <Row>
+      <Row className='text-center'>
+        <h3>Address name</h3>
+      </Row>
+      <Row className='mt-5'>
         <Col md={6} sm={12}>
-          <h3>Wallet name: {wallet.balance || '0 Satoshis'}</h3>
+          <div className='wallet-page-address-container'>
+            <h4 className='wallet-page-address'>{wallet?.address}</h4>
+            <div className='sub-descriptor'>Address</div>
+          </div>
         </Col>
         <Col md={6} sm={12}>
-          <h4 className='wallet-page-address'>{wallet?.address}</h4>
-          <div className='sub-descriptor'>Address</div>
+          <div className='wallet-balance'>
+            {wallet.balance || '0 Satoshis'}
+
+          </div>
         </Col>
       </Row>
       <Row>
-        <div>Keys:</div>
+        <div className='section-title'>Keys</div>
+        <div className='section-subtitle'>Key pairs used in this address</div>
         {wallet?.keys ? <WalletKeyList keyIds={wallet.keys} /> : <div>No Keys</div>}
       </Row>
       <Row xs="auto" className='justify-content-between'>
@@ -35,7 +44,7 @@ const WalletPage = () => {
           <Button>Create Transaction</Button>
         </Col>
         <Col>
-          <Button onClick={handleFundClick}>Fund Wallet</Button>
+          <Button onClick={handleFundClick}>Fund Address</Button>
         </Col>
       </Row>
     </Container>

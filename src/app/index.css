@@ -65,9 +65,17 @@ td {
   box-shadow: 8px 5px 5px rgb(114, 110, 110);
 }
 
+.wallet-balance {
+  text-align: right;
+  font-size: 1.5rem;
+}
+
+.wallet-page-address-container {
+  max-width: fit-content;
+}
+
 .wallet-page-address {
   overflow-wrap: break-word;
-  text-align: right;
 }
 
 .section-title {
