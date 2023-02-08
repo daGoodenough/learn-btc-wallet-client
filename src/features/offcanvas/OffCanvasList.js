@@ -1,6 +1,8 @@
 import { useSelector } from "react-redux";
+import { NavDropdown } from "react-bootstrap";
 
 import OffCanvasListItem from './OffCanvasListItem';
+
 
 const OffCanvasList = ({ listType }) => {
   const { wallets } = useSelector((state) => state);

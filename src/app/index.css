@@ -55,6 +55,10 @@ a.feature-nav.nav-link.active:hover {
   color: var(--font1);
 }
 
+div.nav-item.dropdown {
+  margin: 0 25px;
+}
+
 /* .nav-login {
   color: white;
 }

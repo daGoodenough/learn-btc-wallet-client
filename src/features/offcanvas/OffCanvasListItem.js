@@ -1,5 +1,6 @@
 import { useSelector } from "react-redux";
 import { useState } from 'react';
+import { NavDropdown } from "react-bootstrap";
 
 import CreateKeyModal from '../keys/CreateKeyModal';
 import CreateWalletModal from '../wallets/CreateWalletModal';
@@ -33,7 +34,7 @@ const OffCanvasListItem = ({ item, itemType, placeholder }) => {
   const itemName = item.address || item.keyName
 
   return (
-    <button className="offcanvas-list-item">{itemName}</button>
+    <NavDropdown.Item >{itemName}</NavDropdown.Item>
   );
 }
 
