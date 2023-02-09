@@ -22,7 +22,7 @@ const WalletPage = () => {
   return (
     <Container className='mt-2 wallet-container'>
       <Row className='text-center'>
-        <h3>Address name</h3>
+        <h3>{wallet.walletName || 'Address Name'}</h3>
       </Row>
       <Row className='mt-3'>
         <Col xs={8}>

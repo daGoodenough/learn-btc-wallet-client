@@ -59,7 +59,7 @@ const TopNav = () => {
                           as={Link}
                           to={`wallet/${wallet._id}`}
                         >
-                          {wallet.address}
+                          {wallet.walletName || 'Address Name'}
                         </NavDropdown.Item>
                       );
                     })}
