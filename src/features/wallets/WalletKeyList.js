@@ -8,7 +8,7 @@ const WalletKeyList = ({ keyIds }) => {
 
   const addrKeys = keyIds?.reduce((keys, keyId) => {
     const addrKey = userKeys.find(key => key._id === keyId);
-    if(!addrKey) {
+    if (!addrKey) {
       return keys;
     };
     keys.push(addrKey);
@@ -16,10 +16,22 @@ const WalletKeyList = ({ keyIds }) => {
   }, []);
 
   const [modalShow, setModalShow] = useState(false);
+  const [selectedKey, setSelectedKey] = useState({});
 
   if (!addrKeys || addrKeys.length === 0) {
     return <h5 className='text-center'>No keys available</h5>
   };
+
+  const handleKeyClick = (key) => {
+    setModalShow(!modalShow);
+    setSelectedKey(key);
+  };
+
+  const handleModalHide = () => {
+    setModalShow(false);
+    setSelectedKey({});
+  };
+
   return (
     <>
       <Col>
@@ -27,29 +39,31 @@ const WalletKeyList = ({ keyIds }) => {
           <tbody>
             {addrKeys.map(key => {
               return (
-                <tr
-                  className='d-flex justify-content-between'
-                  key={key._id}
-                  onClick={() => setModalShow(!modalShow)}
-                >
-                  <td className='key-name'>
-                    <div>
-                      {key.keyName}
-                    </div>
-                  </td>
-                  <td>
-                    <div className='pub-key'>
-                      {key.publicKey}
-                    </div>
-                    <div className='sub-descriptor'>Pub Key</div>
-                  </td>
+                <>
+                  <tr
+                    className='d-flex justify-content-between'
+                    key={key._id}
+                    onClick={() => handleKeyClick(key)}
+                  >
+                    <td className='key-name'>
+                      <div>
+                        {key.keyName}
+                      </div>
+                    </td>
+                    <td>
+                      <div className='pub-key'>
+                        {key.publicKey}
+                      </div>
+                      <div className='sub-descriptor'>Pub Key</div>
+                    </td>
+                  </tr>
                   <KeyInfoModal
                     show={modalShow}
-                    onHide={() => setModalShow(false)}
-                    keyPair={key}
+                    onHide={handleModalHide}
+                    keyPair={selectedKey}
                     key={key._id}
                   />
-                </tr>
+                </>
               )
             })}
           </tbody>
