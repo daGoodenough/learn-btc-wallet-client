@@ -35,7 +35,7 @@ const TopNav = () => {
     <>
       <Navbar variant="dark" expand='lg' collapseOnSelect>
         <Container>
-          <Navbar.Brand href="#home">Learn BTC Wallet</Navbar.Brand>
+          <Navbar.Brand as={Link} to={'/'}>Learn BTC Wallet</Navbar.Brand>
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
           <Navbar.Collapse className='justify-content-end'>
             {
