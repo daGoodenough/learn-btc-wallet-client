@@ -44,7 +44,7 @@ const CreateKeyModal = (props) => {
     if (!keyName) {
       return setErrorMessages({ keyName: "You must create a key name." });
     }
-    const { privateKey } = privKey.privateKey;
+    const { privateKey } = privKey;
 
     const publicKey = compressed ?
       pubKey.compressed :
@@ -54,7 +54,7 @@ const CreateKeyModal = (props) => {
       privKey.wifCompressed :
       privKey.wifUncompressed;
 
-    dispatch(saveKeyPair(keyName, privateKey, wif, publicKey));
+    dispatch(saveKeyPair(keyName, privateKey, wif, publicKey, compressed));
     setErrorMessages({});
   };
 

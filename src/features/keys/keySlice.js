@@ -28,7 +28,7 @@ export const fetchUserKeys = () => dispatch => {
 };
 
 export const saveKeyPair =
-  (keyName, privateKey, wif, publicKey) =>
+  (keyName, privateKey, wif, publicKey, compressed) =>
     dispatch => {
       axios
         .post(`${BASE_URL}/api/keys`, {
@@ -36,6 +36,7 @@ export const saveKeyPair =
         privateKey,
         wif,
         publicKey,
+        compressed,
       },
         config)
         .then(response => dispatch(addKey(response.data)))

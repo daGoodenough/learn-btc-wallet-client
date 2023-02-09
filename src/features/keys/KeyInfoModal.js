@@ -43,7 +43,7 @@ const KeyInfoModal = (props) => {
           <Form.Group as={Col} md={3} sm={12}className="mb-3">
             <Form.Label>Compressed?</Form.Label>
             <Form.Control
-              value={keyPair?.compressed}
+              value={keyPair?.isCompressed}
               disabled
             />
           </Form.Group>
