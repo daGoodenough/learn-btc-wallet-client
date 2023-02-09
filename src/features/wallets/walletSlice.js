@@ -37,11 +37,11 @@ export const fetchUserWallets = () => dispatch => {
     .catch(error => console.log(error))
 };
 
-export const createWallet = (addrType, keys) => dispatch => {
+export const createWallet = (addrType, keys, name) => dispatch => {
   axios
     .post(
       `${BASE_URL}/api/wallets/${addrType}`,
-      { keys, network: 'regtest' },
+      { keys, network: 'regtest', name },
       authConfig
     )
     .then(response => {

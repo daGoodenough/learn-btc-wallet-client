@@ -10,9 +10,10 @@ const CreateWalletModal = (props) => {
   const [numAddrs, setNumAddrs] = useState('single');
   const [walletKeys, setWalletKeys] = useState('');
   const [addrType, setAddrType] = useState('');
+  const [addrName, setAddrname] = useState('');
 
   const handleWalletCreate = () => {
-    dispatch(createWallet(addrType, walletKeys));
+    dispatch(createWallet(addrType, walletKeys, addrName));
   }
 
   return (
@@ -84,7 +85,11 @@ const CreateWalletModal = (props) => {
             </Form.Group>
             <Form.Group as={Col} md={6} sm={12}>
               <h5>Step 4: Name your wallet</h5>
-              <Form.Control type='text' />
+              <Form.Control 
+                onChange={(e) => setAddrname(e.target.value)}
+                value={addrName} 
+                type='text'
+              />
             </Form.Group>
           </Row>
         </Form>
