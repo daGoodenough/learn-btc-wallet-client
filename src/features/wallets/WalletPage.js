@@ -4,6 +4,7 @@ import { useParams } from "react-router";
 
 import { fundWallet } from './walletSlice';
 import WalletKeyList from './WalletKeyList';
+import WalletTxList from './WalletTxList';
 
 const WalletPage = () => {
   const dispatch = useDispatch();
@@ -33,7 +34,7 @@ const WalletPage = () => {
         </Col>
         <Col xs={4}>
           <div className='wallet-balance'>
-            {(wallet.balance * 1e6).toLocaleString()} sats
+            {(wallet.balance * 1e8).toLocaleString()} sats
           </div>
         </Col>
       </Row>
@@ -54,7 +55,7 @@ const WalletPage = () => {
       <Row>
         <div className='section-title'>Transactions</div>
         <div className='section-subtitle'>UTXOs associated with address</div>
-        {wallet?.keys ? <WalletKeyList keyIds={wallet.keys} /> : <div>No Keys</div>}
+        {wallet?.transactions ? <WalletTxList transactions={wallet.transactions} /> : <div>No Keys</div>}
       </Row>
     </Container>
   );
