@@ -1,16 +1,19 @@
 import { Container, Button, Row, Col } from 'react-bootstrap';
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router";
+import { useState } from 'react';
 
 import { fundWallet } from './walletSlice';
 import WalletKeyList from './WalletKeyList';
 import WalletTxList from './WalletTxList';
+import CreateTxModal from '../transactions/CreateTxModal';
 
 const WalletPage = () => {
   const dispatch = useDispatch();
   const { walletId } = useParams();
   const { wallets } = useSelector(state => state);
   const wallet = wallets.find(wallet => wallet._id === walletId);
+  const [modalShow, setModalShow] = useState(false)
 
   if(!wallet) {
     return <h2 className='text-center'>Wallet not found...</h2>
@@ -40,7 +43,7 @@ const WalletPage = () => {
       </Row>
       <Row xs="auto" className='justify-content-between mt-2'>
         <Col>
-          <Button>Create Transaction</Button>
+          <Button onClick={() => setModalShow(true)}>Create Transaction</Button>
         </Col>
         <Col>
           <Button onClick={handleFundClick}>Fund Address</Button>
@@ -57,6 +60,11 @@ const WalletPage = () => {
         <div className='section-subtitle'>UTXOs associated with address</div>
         {wallet?.transactions ? <WalletTxList transactions={wallet.transactions} /> : <div>No Keys</div>}
       </Row>
+      <CreateTxModal 
+        show={modalShow}
+        onHide={() => setModalShow(false)}
+        address={wallet}
+      />
     </Container>
   );
 }
