@@ -3,17 +3,34 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useState } from 'react';
 
 import { createWallet } from '../wallets/walletSlice';
+import { createRawP2pkh } from '../../utils/bitcoind/rawTransactions';
 
 const CreateTxModal = (props) => {
   const dispatch = useDispatch();
   const { address } = props;
   const userAddrs = useSelector(state => state.wallets);
+  const keyPair = useSelector(state => {
+   return state.keys.find(key => key._id === address.keys[0]);
+  })
   const [recipientAddr, setRecipientAddr] = useState('')
-  const [selectedUtxo, setSelectedUtxo] = useState('');
+  const [selectedUtxo, setSelectedUtxo] = useState({});
   const [selectedFee, setSelectedFee] = useState('');
+  const [value, setValue] = useState(0);
 
-  const handleTxCreate = () => {
+  const handleTxCreate = async () => {
+    const utxo = address.transactions.find(transaction => transaction._id === selectedUtxo);
 
+    const transaction = await createRawP2pkh({
+      address: address.address,
+      WIFs: [keyPair.wif],
+      utxoId: utxo.txid,
+      fee: selectedFee,
+      network: 'regtest',
+      vout: utxo.vout,
+      scriptPubKey: utxo.scriptPubKey,
+      value,
+      recipientAddr,
+    })
   };
 
   return (
@@ -38,7 +55,7 @@ const CreateTxModal = (props) => {
             <Form.Group as={Col}>
               <Form.Label>Send to</Form.Label>
               <Form.Select onChange={(e) => setRecipientAddr(e.target.value)}>
-                <option>Address</option>
+                <option value={''}>Address</option>
                 {userAddrs.map(address => <option value={address.address}>{address.address}</option>)}
                 <option value={'random'}>Random Address</option>
               </Form.Select>
@@ -48,22 +65,22 @@ const CreateTxModal = (props) => {
             <Form.Group as={Col}>
               <Form.Label>UTXO selection</Form.Label>
               <Form.Select onChange={(e) => setSelectedUtxo(e.target.value)}>
-                <option>Pick UTXO to spend:</option>
+                <option value={''}>Pick UTXO to spend:</option>
                 {address.transactions.map(utxo => {
-                  return <option value={utxo.txid}>{utxo.amount}</option>
+                  return <option value={utxo._id}>{utxo.amount}</option>
                 })}
               </Form.Select>
             </Form.Group>
             <Form.Group as={Col}>
                 <Form.Label>Amount (sats)</Form.Label>
-                <Form.Control placeholder='Sats are whole numbers' type='text' pattern="\d*"/>
+                <Form.Control onChange={(e) => setValue(e.target.value)} placeholder='Sats are whole numbers' type='text' pattern="\d*"/>
             </Form.Group>
           </Row>
           <Row>
             <Form.Group as={Col}>
               <Form.Label>Fee</Form.Label>
               <Form.Select onChange={(e) => setSelectedFee(e.target.value)}>
-                <option>Choose fee rate</option>
+                <option value={''}>Choose fee rate</option>
                 <option value={1}>1 sat/vbyte (slow)</option>
                 <option value={3}>3 sat/vbyte (medium)</option>
                 <option value={5}>5 sat/vbyte (fast)</option>
