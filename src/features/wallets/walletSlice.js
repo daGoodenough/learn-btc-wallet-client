@@ -17,7 +17,7 @@ export const walletSlice = createSlice({
     },
     changeBalance: (state, action) => {
       const wallet = state.find(
-        wallet => wallet.address === action.payload.address
+        wallet => wallet._id === action.payload.addressId
       );
       wallet.balance = action.payload.newBalance;
     }
@@ -50,15 +50,15 @@ export const createWallet = (addrType, keys, name) => dispatch => {
     .catch(error => console.log(error))
 }
 
-export const fundWallet = (address) => dispatch => {
+export const fundWallet = (addressId) => dispatch => {
   axios
     .post(
       `${BASE_URL}/api/transactions/fund-wallet`,
-      { address },
+      { addressId },
       authConfig
     )
     .then(response => {
-      dispatch(changeBalance({ newBalance: response.data, address }))
+      dispatch(changeBalance({ newBalance: response.data, addressId }))
     })
     .catch(error => console.error(error))
 

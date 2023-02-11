@@ -16,7 +16,7 @@ const WalletPage = () => {
   }
 
   const handleFundClick = () => {
-    dispatch(fundWallet(wallet.address))
+    dispatch(fundWallet(wallet._id))
   }
 
   return (
@@ -33,7 +33,7 @@ const WalletPage = () => {
         </Col>
         <Col xs={4}>
           <div className='wallet-balance'>
-            {'0'} sats
+            {(wallet.balance * 1e6).toLocaleString()} sats
           </div>
         </Col>
       </Row>
