@@ -11,5 +11,17 @@ export const createRawP2pkh = async (transactiondData) => {
     .then((response) => response.data)
     .catch(error => { throw new Error(error) });
 
-    return transaction;
+  return transaction;
+};
+
+export const broadcastTransaction = async (txHex) => {
+  const txid = await axios
+    .post(`${BASE_URL}/api/transactions/broadcast`,
+      { txHex },
+      authConfig
+    )
+    .then(response => response.data)
+    .catch(error => { throw new Error(error) });
+    debugger;
+    return txid;  
 }
