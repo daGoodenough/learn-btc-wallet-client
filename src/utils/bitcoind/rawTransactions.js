@@ -21,7 +21,6 @@ export const broadcastTransaction = async (txHex) => {
       authConfig
     )
     .then(response => response.data)
-    .catch(error => { throw new Error(error) });
-    debugger;
+    .catch(error => { throw new Error(error.response.data) });
     return txid;  
 }

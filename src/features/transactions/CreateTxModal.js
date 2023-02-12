@@ -1,4 +1,4 @@
-import { Modal, Button, Form, Row, Col } from 'react-bootstrap';
+import { Modal, Button, Form, Row, Col, Toast, ToastContainer } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 import { useState } from 'react';
 
@@ -17,6 +17,8 @@ const CreateTxModal = (props) => {
   const [selectedFee, setSelectedFee] = useState('');
   const [value, setValue] = useState(0);
   const [transaction, setTransaction] = useState({});
+  const [toastShow, setToastShow] = useState(false);
+  const [broadcasted, setBroadcasted] = useState({ txid: '', value: null })
 
   const handleTxCreate = async () => {
     try {
@@ -42,138 +44,186 @@ const CreateTxModal = (props) => {
 
   const handleBroadcast = async () => {
     try {
-     const txid = await broadcastTransaction(transaction.hex);
+      const txid = await broadcastTransaction(transaction.hex);
+      setBroadcasted({ txid, value, error: null });
+
+      props.onHide();
+
+      setTimeout(() => {
+        setToastShow(true);
+      }, 2000);
     }
     catch (error) {
-      console.log(error);
+      setBroadcasted({ 
+        txid: '',  
+        value: null, 
+        error: error.message 
+      });
+
+      props.onHide();
+
+      setTimeout(() => {
+        setToastShow(true);
+      }, 2000);
     }
-  }
+  };
 
   return (
-    <Modal
-      {...props}
-      size="lg"
-      aria-labelledby="contained-modal-title-vcenter"
-      centered
-    >
-      <Modal.Header closeButton closeVariant='white'>
-        <Modal.Title id="contained-modal-title-vcenter">
-          {modalPage === 1 && 'Create Transaction'}
-          {modalPage === 2 && 'Transaction info'}
-        </Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        {
-          modalPage === 1 &&
-          <Form>
-            <Row>
-              <Form.Group as={Col}>
-                <Form.Label>Send from</Form.Label>
-                <Form.Control value={address.address} disabled />
+    <>
+      <Modal
+        {...props}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <Modal.Header closeButton closeVariant='white'>
+          <Modal.Title id="contained-modal-title-vcenter">
+            {modalPage === 1 && 'Create Transaction'}
+            {modalPage === 2 && 'Transaction info'}
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {
+            modalPage === 1 &&
+            <Form>
+              <Row>
+                <Form.Group as={Col}>
+                  <Form.Label>Send from</Form.Label>
+                  <Form.Control value={address.address} disabled />
+                </Form.Group>
+                <Form.Group as={Col}>
+                  <Form.Label>Send to</Form.Label>
+                  <Form.Select onChange={(e) => setRecipientAddr(e.target.value)}>
+                    <option value={''}>Address</option>
+                    {userAddrs.map(address => <option value={address.address}>{address.address}</option>)}
+                    <option value={'random'}>Random Address</option>
+                  </Form.Select>
+                </Form.Group>
+              </Row>
+              <Row>
+                <Form.Group as={Col}>
+                  <Form.Label>UTXO selection</Form.Label>
+                  <Form.Select onChange={(e) => setSelectedUtxo(e.target.value)}>
+                    <option value={''}>Pick UTXO to spend:</option>
+                    {address.transactions.map(utxo => {
+                      return <option value={utxo._id}>{utxo.amount}</option>
+                    })}
+                  </Form.Select>
+                </Form.Group>
+                <Form.Group as={Col}>
+                  <Form.Label>Amount (sats)</Form.Label>
+                  <Form.Control onChange={(e) => setValue(e.target.value)} placeholder='Sats are whole numbers' type='text' pattern="\d*" />
+                </Form.Group>
+              </Row>
+              <Row>
+                <Form.Group as={Col}>
+                  <Form.Label>Fee</Form.Label>
+                  <Form.Select onChange={(e) => setSelectedFee(e.target.value)}>
+                    <option value={''}>Choose fee rate</option>
+                    <option value={1}>1 sat/vbyte (slow)</option>
+                    <option value={3}>3 sat/vbyte (medium)</option>
+                    <option value={5}>5 sat/vbyte (fast)</option>
+                  </Form.Select>
+                </Form.Group>
+                <Form.Group as={Col}>
+                  <Form.Label>Network</Form.Label>
+                  <Form.Control value={"regtest"} disabled />
+                </Form.Group>
+              </Row>
+            </Form>
+          }
+          {
+            modalPage === 2 &&
+            <Form>
+              <Row>
+                {transaction.decodedTx.vin.map((input, index) => {
+                  return (
+                    <>
+                      <h5>Input {index + 1}</h5>
+                      <Form.Group as={Col} md={6}>
+                        <Form.Label>Input txid</Form.Label>
+                        <Form.Control disabled value={input.txid} as='textarea' />
+                      </Form.Group>
+                      <Form.Group as={Col} md={6}>
+                        <Form.Label>Script Sig ASM</Form.Label>
+                        <Form.Control disabled value={input.scriptSig.asm} as='textarea' />
+                      </Form.Group>
+                    </>
+                  )
+                })}
+              </Row>
+              {
+                transaction.decodedTx.vout.map((output, index) => {
+                  return (
+                    <>
+                      <Row>
+                        <h5>Output {index + 1}</h5>
+                        <Form.Group md={6} as={Col}>
+                          <Form.Label>Recieving Address</Form.Label>
+                          <Form.Control as='textarea' value={output.scriptPubKey.address} disabled />
+                        </Form.Group>
+                        <Form.Group md={6} as={Col}>
+                          <Form.Label>Amount (sats)</Form.Label>
+                          <Form.Control value={output.value * 1e8} disabled />
+                        </Form.Group>
+                        <Form.Group as={Col} md={3}>
+                          <Form.Label>Address Type</Form.Label>
+                          <Form.Control as='textarea' value={output.scriptPubKey.type} disabled />
+                        </Form.Group>
+                        <Form.Group as={Col} md={9}>
+                          <Form.Label>Locking Script</Form.Label>
+                          <Form.Control as='textarea' value={output.scriptPubKey.asm} disabled />
+                        </Form.Group>
+                      </Row>
+                    </>
+                  );
+                })
+              }
+              <Form.Group>
+                <Form.Label>Raw Transaction</Form.Label>
+                <Form.Control as='textarea' col='6' value={transaction.hex} disabled />
               </Form.Group>
-              <Form.Group as={Col}>
-                <Form.Label>Send to</Form.Label>
-                <Form.Select onChange={(e) => setRecipientAddr(e.target.value)}>
-                  <option value={''}>Address</option>
-                  {userAddrs.map(address => <option value={address.address}>{address.address}</option>)}
-                  <option value={'random'}>Random Address</option>
-                </Form.Select>
-              </Form.Group>
-            </Row>
-            <Row>
-              <Form.Group as={Col}>
-                <Form.Label>UTXO selection</Form.Label>
-                <Form.Select onChange={(e) => setSelectedUtxo(e.target.value)}>
-                  <option value={''}>Pick UTXO to spend:</option>
-                  {address.transactions.map(utxo => {
-                    return <option value={utxo._id}>{utxo.amount}</option>
-                  })}
-                </Form.Select>
-              </Form.Group>
-              <Form.Group as={Col}>
-                <Form.Label>Amount (sats)</Form.Label>
-                <Form.Control onChange={(e) => setValue(e.target.value)} placeholder='Sats are whole numbers' type='text' pattern="\d*" />
-              </Form.Group>
-            </Row>
-            <Row>
-              <Form.Group as={Col}>
-                <Form.Label>Fee</Form.Label>
-                <Form.Select onChange={(e) => setSelectedFee(e.target.value)}>
-                  <option value={''}>Choose fee rate</option>
-                  <option value={1}>1 sat/vbyte (slow)</option>
-                  <option value={3}>3 sat/vbyte (medium)</option>
-                  <option value={5}>5 sat/vbyte (fast)</option>
-                </Form.Select>
-              </Form.Group>
-              <Form.Group as={Col}>
-                <Form.Label>Network</Form.Label>
-                <Form.Control value={"regtest"} disabled />
-              </Form.Group>
-            </Row>
-          </Form>
-        }
-        {
-          modalPage === 2 &&
-          <Form>
-            <Row>
-              {transaction.decodedTx.vin.map((input, index) => {
-                return (
-                  <>
-                    <h5>Input {index + 1}</h5>
-                    <Form.Group as={Col} md={6}>
-                      <Form.Label>Input txid</Form.Label>
-                      <Form.Control disabled value={input.txid} as='textarea' />
-                    </Form.Group>
-                    <Form.Group as={Col} md={6}>
-                      <Form.Label>Script Sig ASM</Form.Label>
-                      <Form.Control disabled value={input.scriptSig.asm} as='textarea' />
-                    </Form.Group>
-                  </>
-                )
-              })}
-            </Row>
+            </Form>
+          }
+        </Modal.Body>
+        <Modal.Footer>
+          {modalPage === 1 && <Button onClick={handleTxCreate}>Create</Button>}
+          {modalPage === 2 && (<>
+            <Button onClick={() => setModalPage(1)}>Back</Button>
+            <Button onClick={() => handleBroadcast()}>Broadcast Tx</Button>
+          </>)}
+        </Modal.Footer>
+      </Modal>
+      <ToastContainer position={'top-center'}>
+        <Toast
+          onClose={() => setToastShow(false)}
+          show={toastShow}
+          delay={5000}
+          autohide
+          bg='dark'
+        >
+          <Toast.Header className='justify-content-between'>
             {
-              transaction.decodedTx.vout.map((output, index) => {
-                return (
-                  <>
-                    <Row>
-                      <h5>Output {index + 1}</h5>
-                      <Form.Group md={6} as={Col}>
-                        <Form.Label>Recieving Address</Form.Label>
-                        <Form.Control as='textarea' value={output.scriptPubKey.address} disabled />
-                      </Form.Group>
-                      <Form.Group md={6} as={Col}>
-                        <Form.Label>Amount (sats)</Form.Label>
-                        <Form.Control value={output.value * 1e8} disabled />
-                      </Form.Group>
-                      <Form.Group as={Col} md={3}>
-                        <Form.Label>Address Type</Form.Label>
-                        <Form.Control as='textarea' value={output.scriptPubKey.type} disabled />
-                      </Form.Group>
-                      <Form.Group as={Col} md={9}>
-                        <Form.Label>Locking Script</Form.Label>
-                        <Form.Control as='textarea' value={output.scriptPubKey.asm} disabled />
-                      </Form.Group>
-                    </Row>
-                  </>
-                );
-              })
+              broadcasted.error &&
+              <div className='broadcast-error'>Failed to Broadcast tx</div>
             }
-            <Form.Group>
-              <Form.Label>Raw Transaction</Form.Label>
-              <Form.Control as='textarea' col='6' value={transaction.hex} disabled />
-            </Form.Group>
-          </Form>
-        }
-      </Modal.Body>
-      <Modal.Footer>
-        { modalPage === 1 && <Button onClick={handleTxCreate}>Create</Button>}
-        { modalPage ===2 && (<>
-          <Button onClick={() => setModalPage(1)}>Back</Button>
-          <Button onClick={() => handleBroadcast()}>Broadcast Tx</Button>
-        </>)}
-      </Modal.Footer>
-    </Modal>
+            {
+              broadcasted.txid && 
+              "Transaction successfully broadcast"
+            }
+          </Toast.Header>
+          <Toast.Body>
+            {broadcasted.error ?
+              <div >{broadcasted.error}</div> :
+              (<>
+                <div><strong>txid:</strong>  {broadcasted.txid}</div>
+                <div><strong>Amount:</strong> {broadcasted.value} sats</div>
+              </>)
+            }
+          </Toast.Body>
+        </Toast>
+      </ToastContainer>
+    </>
   );
 }
 

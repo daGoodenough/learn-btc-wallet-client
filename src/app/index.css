@@ -183,3 +183,27 @@ td.key-name {
   background-color: var(--primary);
   border-color: var(--primary);
 }
+
+.toast-header {
+  background-color: var(--font1);
+  color: green;
+  font-weight: bold;
+  font-size: 1.3rem;
+}
+
+.toast-body {
+  font-size: 1.05rem;
+}
+
+.toast {
+  border-color: var(--primary);
+  border-width: 2px;
+}
+
+.toast-container {
+  margin-top: 10px;
+}
+
+.broadcast-error {
+  color: red;
+}
