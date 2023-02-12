@@ -155,8 +155,8 @@ const CreateTxModal = (props) => {
               {
                 transaction.decodedTx.vout.map((output, index) => {
                   return (
-                    <>
-                      <Row className='tx-info-outputs'>
+                    <div key={output.scriptPubKey + index}>
+                      <Row className='tx-info-outputs' >
                         <h5>Output {index + 1}</h5>
                         <Form.Group md={6} as={Col}>
                           <Form.Label>Recieving Address</Form.Label>
@@ -175,7 +175,7 @@ const CreateTxModal = (props) => {
                           <Form.Control as='textarea' value={output.scriptPubKey.asm} disabled />
                         </Form.Group>
                       </Row>
-                    </>
+                    </div>
                   );
                 })
               }
