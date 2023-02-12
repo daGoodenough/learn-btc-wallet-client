@@ -18,7 +18,8 @@ const TopNav = () => {
   const [selectedKey, setSelectedKey] = useState({});
 
   const handleSignout = () => {
-    dispatch(signout())
+    dispatch(signout());
+    window.location.reload();
   }
 
   const handleKeyInfoModalHide = () => {
