@@ -1,4 +1,4 @@
-import { Container, Button, Row, Col } from 'react-bootstrap';
+import { Container, Button, Row, Col, ToastContainer, Toast } from 'react-bootstrap';
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router";
 import { useState } from 'react';
@@ -14,16 +14,24 @@ const WalletPage = () => {
   const { wallets } = useSelector(state => state);
   const wallet = wallets.find(wallet => wallet._id === walletId);
   const [modalShow, setModalShow] = useState(false)
+  const [toastMessage, setToastMessage] = useState({newBalance: null, error: null});
+  const [toastShow, setToastShow] = useState(false);
 
-  if(!wallet) {
+  if (!wallet) {
     return <h2 className='text-center'>Wallet not found...</h2>
   }
 
-  const handleFundClick = () => {
-    dispatch(fundWallet(wallet._id))
+  const handleFundClick = async () => {
+    dispatch(fundWallet(wallet._id,
+      (newBalance, error) => {
+          setToastMessage({newBalance, error})
+          setToastShow(true);
+      }
+    ));
   }
 
   return (
+    <>
     <Container className='mt-2 wallet-container'>
       <Row className='text-center'>
         <h3>{wallet.walletName || 'Address Name'}</h3>
@@ -54,18 +62,48 @@ const WalletPage = () => {
         <div className='section-subtitle'>Key pairs used in this address</div>
         {wallet?.keys ? <WalletKeyList keyIds={wallet.keys} /> : <div>No Keys</div>}
       </Row>
-      
+
       <Row>
         <div className='section-title'>UTXOs</div>
         <div className='section-subtitle'>Unspent transactions to this address</div>
         {wallet?.transactions ? <WalletTxList transactions={wallet.transactions} /> : <div>No Keys</div>}
       </Row>
-      <CreateTxModal 
+      <CreateTxModal
         show={modalShow}
         onHide={() => setModalShow(false)}
         address={wallet}
       />
     </Container>
+    <ToastContainer position={'top-center'}>
+        <Toast
+          onClose={() => setToastShow(false)}
+          show={toastShow}
+          delay={5000}
+          autohide
+          bg='dark'
+        >
+          <Toast.Header className='justify-content-between'>
+            {
+              toastMessage.error &&
+              <div className='broadcast-error'>Failed to fund wallet</div>
+            }
+            {
+              toastMessage.newBalance && 
+              "Wallet Funded & 1 Block Mined"
+            }
+          </Toast.Header>
+          <Toast.Body>
+            {toastMessage.error ?
+              <div >{toastMessage.error.response.data}</div> :
+              (<>
+                <div><strong>New Balance: </strong>  {(toastMessage.newBalance * 1e8).toLocaleString()} sats</div>
+                <div><strong>Previous Balance:</strong> {(toastMessage.newBalance * 1e8 - 1e8).toLocaleString()} sats</div>
+              </>)
+            }
+          </Toast.Body>
+        </Toast>
+      </ToastContainer>
+      </>
   );
 }
 
