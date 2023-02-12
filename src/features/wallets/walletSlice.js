@@ -50,7 +50,7 @@ export const createWallet = (addrType, keys, name) => dispatch => {
     .catch(error => console.log(error))
 }
 
-export const fundWallet = (addressId) => dispatch => {
+export const fundWallet = (addressId, callback) => dispatch => {
   axios
     .post(
       `${BASE_URL}/api/transactions/fund-wallet`,
@@ -58,9 +58,10 @@ export const fundWallet = (addressId) => dispatch => {
       authConfig
     )
     .then(response => {
-      dispatch(changeBalance({ newBalance: response.data, addressId }))
+      dispatch(changeBalance({ newBalance: response.data, addressId }));
+      callback(response.data, null)
     })
-    .catch(error => console.error(error))
+    .catch(error => callback(null, error));
 
   // axios
   //   .post(`http://regtest-server:8080/1/generate`, {address, blocks: 10}).then(response => console.log(response))

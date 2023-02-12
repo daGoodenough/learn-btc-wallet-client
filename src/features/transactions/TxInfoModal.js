@@ -21,8 +21,6 @@ const TxInfoModal = (props) => {
     fetchTx();
   }, [props.tx]);
 
-  console.log(transaction);
-
   return (
     <Modal
       {...props}

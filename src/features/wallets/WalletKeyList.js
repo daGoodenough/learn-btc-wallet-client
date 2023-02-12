@@ -57,16 +57,15 @@ const WalletKeyList = ({ keyIds }) => {
                       <div className='sub-descriptor'>Pub Key</div>
                     </td>
                   </tr>
-                  <KeyInfoModal
-                    show={modalShow}
-                    onHide={handleModalHide}
-                    keyPair={selectedKey}
-                    key={key._id}
-                  />
                 </>
               )
             })}
           </tbody>
+          <KeyInfoModal
+            show={modalShow}
+            onHide={handleModalHide}
+            keyPair={selectedKey}
+          />
         </Table>
       </Col>
     </>
