@@ -14,16 +14,10 @@ function App() {
   useEffect(() => {
     if (token) {
       dispatch(fetchCurrentUser());
+      dispatch(fetchUserWallets());
       dispatch(fetchUserKeys())
     }
   }, [token, dispatch]);
-
-  useEffect(() => {
-    if (token) {
-      dispatch(fetchUserKeys());
-      dispatch(fetchUserWallets());
-    }
-  }, []);
 
   return (
     <div className="App">

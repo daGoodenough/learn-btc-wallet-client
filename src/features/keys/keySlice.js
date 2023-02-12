@@ -21,7 +21,11 @@ export const keySlice = createSlice({
 
 export const fetchUserKeys = () => dispatch => {
   axios
-    .get(`${BASE_URL}/api/keys`, config)
+    .get(`${BASE_URL}/api/keys`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+      }
+    })
     .then((response) => {
       dispatch(addKeys(response.data.keys))
     })
@@ -32,13 +36,13 @@ export const saveKeyPair =
     dispatch => {
       axios
         .post(`${BASE_URL}/api/keys`, {
-        keyName,
-        privateKey,
-        wif,
-        publicKey,
-        compressed,
-      },
-        config)
+          keyName,
+          privateKey,
+          wif,
+          publicKey,
+          compressed,
+        },
+          config)
         .then(response => dispatch(addKey(response.data)))
         .catch(error => console.error(error))
     }
