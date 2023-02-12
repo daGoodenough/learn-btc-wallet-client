@@ -1,6 +1,8 @@
 import { Col, Table } from 'react-bootstrap';
 import { useState } from 'react';
 
+import TxInfoModal from '../transactions/TxInfoModal';
+
 const WalletTxList = ({ transactions }) => {
   const [modalShow, setModalShow] = useState(false);
   const [selectedTx, setSelectedTx] = useState({});
@@ -39,16 +41,16 @@ const WalletTxList = ({ transactions }) => {
                       </div>
                     </td>
                   </tr>
-                  {/* <TxInfoModal
-                    show={modalShow}
-                    onHide={handleModalHide}
-                    tx={selectedTx}
-                    key={transaction._id}
-                  /> */}
                 </>
               )
             })}
           </tbody>
+            <TxInfoModal
+              show={modalShow}
+              onHide={handleModalHide}
+              tx={selectedTx}
+              key={'tx'}
+            />
         </Table>
       </Col>
     </>

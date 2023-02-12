@@ -22,5 +22,16 @@ export const broadcastTransaction = async (txHex) => {
     )
     .then(response => response.data)
     .catch(error => { throw new Error(error.response.data) });
-    return txid;  
-}
+  return txid;
+};
+
+export const fetchDecodedTx = async (txid) => {
+  const tx = await axios
+    .get(`${BASE_URL}/api/transactions/raw`,
+      { params: { txid } }
+    )
+    .then(response => response.data)
+    .catch(error => { throw new Error(error) });
+
+  return tx
+};

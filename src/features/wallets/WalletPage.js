@@ -56,8 +56,8 @@ const WalletPage = () => {
       </Row>
       
       <Row>
-        <div className='section-title'>Transactions</div>
-        <div className='section-subtitle'>UTXOs associated with address</div>
+        <div className='section-title'>UTXOs</div>
+        <div className='section-subtitle'>Unspent transactions to this address</div>
         {wallet?.transactions ? <WalletTxList transactions={wallet.transactions} /> : <div>No Keys</div>}
       </Row>
       <CreateTxModal 
