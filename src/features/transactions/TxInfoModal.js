@@ -59,7 +59,7 @@ const TxInfoModal = (props) => {
                       <Form.Control value={transaction.decoded.vsize}/>
                     </Form.Group>
                   </Row>
-                  <Row>
+                  <Row className='tx-info-inputs'>
                     {transaction.decoded.vin.map((input, index) => {
                       return (
                         <>
@@ -80,7 +80,7 @@ const TxInfoModal = (props) => {
                     transaction.decoded.vout.map((output, index) => {
                       return (
                         <>
-                          <Row>
+                          <Row className='tx-info-outputs'>
                             <h5>Output {index + 1}</h5>
                             <Form.Group md={6} as={Col}>
                               <Form.Label>Recieving Address</Form.Label>

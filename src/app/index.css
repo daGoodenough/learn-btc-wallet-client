@@ -161,9 +161,27 @@ td.key-name {
 .modal-header {
   border-color: var(--font1);
 }
+.modal-title {
+  overflow-wrap: anywhere;
+}
 
 .modal-footer {
   border-color: var(--font1);
+}
+
+.tx-info-inputs {
+  border-top: 1px solid;
+  border-bottom: 1px solid;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.tx-info-outputs {
+  border-bottom: 1px solid;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
 }
 
 .form-control:disabled,
