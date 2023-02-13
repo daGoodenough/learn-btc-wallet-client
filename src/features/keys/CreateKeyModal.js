@@ -1,5 +1,5 @@
 import { Modal, Button, Form, Row, Col, Pagination } from 'react-bootstrap';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { generatePrivKey, generatePubKey } from './keyUtils';
@@ -13,6 +13,15 @@ const CreateKeyModal = (props) => {
   const [activePage, setActivePage] = useState(1);
   const [keyName, setKeyName] = useState('');
   const [errorMessages, setErrorMessages] = useState({})
+
+  useEffect(() => {
+    setPubKey({ compressed: '', uncompressed: '' });
+    setCompressed(true);
+    setKeyName('');
+    setErrorMessages({});
+    setPrivKey('');
+  }, [props.show]);
+
 
   const pagenationItems = [1, 2, 3].map(number => {
     return (
@@ -33,6 +42,9 @@ const CreateKeyModal = (props) => {
 
   const handleGeneratePubKeyClick = async (e) => {
     e.preventDefault();
+    if (!privKey) {
+      return setErrorMessages({ privKey: 'You must first generate a Private Key' })
+    }
 
     const pubKeyResponse = await generatePubKey(privKey.privateKey);
 
@@ -96,6 +108,7 @@ const CreateKeyModal = (props) => {
                   value={privKey.privateKey}
                   disabled
                 />
+                <div className='modal-error-message'>{errorMessages.privKey}</div>
               </Form.Group>
               <Col
                 className="d-flex justify-content-md-center align-items-center"
@@ -133,7 +146,7 @@ const CreateKeyModal = (props) => {
         </Modal.Body>
         <Modal.Footer className='justify-content-around'>
           <Pagination size='sm'>{pagenationItems}</Pagination>
-          <Button onClick={() => setActivePage(2)}>Next</Button>
+          <Button onClick={() => handlePageChange(2)}>Next</Button>
         </Modal.Footer>
       </Modal >
     );
@@ -169,7 +182,7 @@ const CreateKeyModal = (props) => {
         </Modal.Body>
         <Modal.Footer className='justify-content-around'>
           <Pagination size='sm'>{pagenationItems}</Pagination>
-          <Button onClick={() => setActivePage(3)}>Next</Button>
+          <Button onClick={() => handlePageChange(3)}>Next</Button>
         </Modal.Footer>
       </Modal >
     );
@@ -184,7 +197,7 @@ const CreateKeyModal = (props) => {
       >
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
-          Confirm and Save
+            Confirm and Save
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
