@@ -43,8 +43,8 @@ const TopNav = () => {
               username ? (
                 <>
                   <NavDropdown menuVariant='dark' title="Keys">
-                    {keys.map(key => {
-                      return <NavDropdown.Item onClick={() => handleKeyClick(key)}>{key.keyName}</NavDropdown.Item>
+                    {keys.map((key, index) => {
+                      return <NavDropdown.Item key={index} onClick={() => handleKeyClick(key)}>{key.keyName}</NavDropdown.Item>
                     })}
                     <NavDropdown.Divider />
                     <NavDropdown.Item
@@ -54,11 +54,12 @@ const TopNav = () => {
                     </NavDropdown.Item>
                   </NavDropdown>
                   <NavDropdown menuVariant='dark' title="Addresses">
-                    {wallets.map(wallet => {
+                    {wallets.map((wallet, index) => {
                       return (
                         <NavDropdown.Item
                           as={Link}
                           to={`wallet/${wallet._id}`}
+                          key={index}
                         >
                           {wallet.walletName || 'Address Name'}
                         </NavDropdown.Item>

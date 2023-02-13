@@ -19,9 +19,9 @@ const WalletsList = () => {
     <>
       <Table variant='dark' hover responsive>
         <tbody>
-          {wallets.map(wallet => {
+          {wallets.map((wallet) => {
             return (
-              <tr onClick={() => handleWalletClick(wallet._id)}>
+              <tr key={wallet._id} onClick={() => handleWalletClick(wallet._id)}>
                 <td>{wallet.walletName || 'name'}</td>
                 <td>{wallet.address}</td>
                 <td>{wallet.keys.map(key => key)}</td>
