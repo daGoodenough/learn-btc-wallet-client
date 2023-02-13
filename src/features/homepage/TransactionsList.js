@@ -17,7 +17,7 @@ const TransactionsList = () => {
   if(!txes || txes.length === 0) {
     return <h5 className='text-center'>No Transactions... select a wallet to create a transaction</h5>
   }
-
+console.log(txes);
   return (
     <>
       <Table responsive>
@@ -25,9 +25,8 @@ const TransactionsList = () => {
           {txes.map(tx => {
             return (
               <tr>
-                <td>{tx.status}</td>
-                <td>{tx.recipient}</td>
-                <td>{tx.value}</td>
+                <td>{tx.txid}</td>
+                <td>{tx.amount}</td>
               </tr>
             )
           })}
