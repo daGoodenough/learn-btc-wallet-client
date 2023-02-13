@@ -95,7 +95,7 @@ const CreateTxModal = (props) => {
                   <Form.Label>Send to</Form.Label>
                   <Form.Select onChange={(e) => setRecipientAddr(e.target.value)}>
                     <option value={''}>Address</option>
-                    {userAddrs.map(address => <option value={address.address}>{address.address}</option>)}
+                    {userAddrs.map(address => <option key={address._id} value={address.address}>{address.address}</option>)}
                     <option value={'random'}>Random Address</option>
                   </Form.Select>
                 </Form.Group>
@@ -106,7 +106,7 @@ const CreateTxModal = (props) => {
                   <Form.Select onChange={(e) => setSelectedUtxo(e.target.value)}>
                     <option value={''}>Pick UTXO to spend:</option>
                     {address.transactions.map(utxo => {
-                      return <option value={utxo._id}>{utxo.amount}</option>
+                      return <option key={utxo._id} value={utxo._id}>{utxo.amount}</option>
                     })}
                   </Form.Select>
                 </Form.Group>
@@ -139,7 +139,7 @@ const CreateTxModal = (props) => {
                 {transaction.decodedTx.vin.map((input, index) => {
                   return (
                     <>
-                      <h5>Input {index + 1}</h5>
+                      <h5 key={index}>Input {index + 1}</h5>
                       <Form.Group as={Col} md={6}>
                         <Form.Label>Input txid</Form.Label>
                         <Form.Control disabled value={input.txid} as='textarea' />

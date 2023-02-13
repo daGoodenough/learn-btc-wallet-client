@@ -1,6 +1,6 @@
 import { Table, Col } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
-import { useState } from 'react'
+import { useState, Fragment } from 'react'
 import KeyInfoModal from '../keys/KeyInfoModal';
 
 const WalletKeyList = ({ keyIds }) => {
@@ -37,17 +37,16 @@ const WalletKeyList = ({ keyIds }) => {
       <Col>
         <Table variant='dark' borderless hover>
           <tbody>
-            {addrKeys.map(key => {
+            {addrKeys.map((key, index) => {
               return (
-                <>
+                <Fragment key={key._id}>
                   <tr
                     className='d-flex justify-content-between'
-                    key={key._id}
                     onClick={() => handleKeyClick(key)}
                   >
                     <td className='key-name'>
                       <div>
-                        {key.keyName}
+                        {key._id}
                       </div>
                     </td>
                     <td>
@@ -57,7 +56,7 @@ const WalletKeyList = ({ keyIds }) => {
                       <div className='sub-descriptor'>Pub Key</div>
                     </td>
                   </tr>
-                </>
+                </Fragment>
               )
             })}
           </tbody>
