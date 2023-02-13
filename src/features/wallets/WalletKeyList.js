@@ -45,9 +45,7 @@ const WalletKeyList = ({ keyIds }) => {
                     onClick={() => handleKeyClick(key)}
                   >
                     <td className='key-name'>
-                      <div>
-                        {key._id}
-                      </div>
+                        {key.keyName}
                     </td>
                     <td>
                       <div className='pub-key'>

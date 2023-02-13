@@ -59,13 +59,12 @@ div.nav-item.dropdown {
   margin: 0 25px;
 }
 
-/* .nav-login {
-  color: white;
+td.address-name,
+td.address-type,
+td.key-name {
+  min-width: max-content;
+  overflow-wrap: normal;
 }
-
-#basic-nav-dropdown {
-  color: white;
-} */
 
 .modal-error-message {
   color: red;
@@ -105,6 +104,7 @@ td {
 .wallet-balance {
   text-align: right;
   font-size: 1.5rem;
+  overflow-wrap: anywhere;
 }
 
 .wallet-page-address-container {
@@ -127,12 +127,6 @@ td {
 
 td div.pub-key {
   overflow-wrap: anywhere;
-}
-
-td.key-name {
-  min-width: max-content;
-  display: flex;
-  align-items: center;
 }
 
 .btn,
@@ -224,4 +218,25 @@ td.key-name {
 
 .broadcast-error {
   color: red;
+}
+
+@media (max-width: 1000px) {
+  .wallet-balance {
+    font-size: 1.2rem;
+  }
+  .wallet-page-address {
+    font-size: 1.2rem;
+  }
+  a.feature-nav.nav-link {
+    font-size: 1rem;
+  }
+  .section-title {
+    font-size: 1.3rem;
+  }
+  td {
+    overflow-wrap: anywhere;
+  }
+  table.table {
+    width: 100vw;
+  }
 }

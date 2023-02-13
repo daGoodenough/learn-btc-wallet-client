@@ -54,10 +54,10 @@ const CreateTxModal = (props) => {
       }, 2000);
     }
     catch (error) {
-      setBroadcasted({ 
-        txid: '',  
-        value: null, 
-        error: error.message 
+      setBroadcasted({
+        txid: '',
+        value: null,
+        error: error.message
       });
 
       props.onHide();
@@ -73,6 +73,7 @@ const CreateTxModal = (props) => {
       <Modal
         {...props}
         size="lg"
+        dialogClassName="modal-width"
         aria-labelledby="contained-modal-title-vcenter"
         centered
       >
@@ -82,16 +83,16 @@ const CreateTxModal = (props) => {
             {modalPage === 2 && 'Transaction info'}
           </Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-          {
-            modalPage === 1 &&
+        {
+          modalPage === 1 &&
+          (<Modal.Body>
             <Form>
               <Row>
-                <Form.Group as={Col}>
+                <Form.Group as={Col} md={6} xs={12}>
                   <Form.Label>Send from</Form.Label>
                   <Form.Control value={address.address} disabled />
                 </Form.Group>
-                <Form.Group as={Col}>
+                <Form.Group as={Col} md={6} xs={12}>
                   <Form.Label>Send to</Form.Label>
                   <Form.Select onChange={(e) => setRecipientAddr(e.target.value)}>
                     <option value={''}>Address</option>
@@ -101,7 +102,7 @@ const CreateTxModal = (props) => {
                 </Form.Group>
               </Row>
               <Row>
-                <Form.Group as={Col}>
+                <Form.Group as={Col} md={6} xs={12}>
                   <Form.Label>UTXO selection</Form.Label>
                   <Form.Select onChange={(e) => setSelectedUtxo(e.target.value)}>
                     <option value={''}>Pick UTXO to spend:</option>
@@ -110,13 +111,13 @@ const CreateTxModal = (props) => {
                     })}
                   </Form.Select>
                 </Form.Group>
-                <Form.Group as={Col}>
+                <Form.Group as={Col} md={6} xs={12}>
                   <Form.Label>Amount (sats)</Form.Label>
                   <Form.Control onChange={(e) => setValue(e.target.value)} placeholder='Sats are whole numbers' type='text' pattern="\d*" />
                 </Form.Group>
               </Row>
               <Row>
-                <Form.Group as={Col}>
+                <Form.Group as={Col} md={6} xs={12}>
                   <Form.Label>Fee</Form.Label>
                   <Form.Select onChange={(e) => setSelectedFee(e.target.value)}>
                     <option value={''}>Choose fee rate</option>
@@ -125,15 +126,17 @@ const CreateTxModal = (props) => {
                     <option value={5}>5 sat/vbyte (fast)</option>
                   </Form.Select>
                 </Form.Group>
-                <Form.Group as={Col}>
+                <Form.Group as={Col} md={6} xs={12}>
                   <Form.Label>Network</Form.Label>
                   <Form.Control value={"regtest"} disabled />
                 </Form.Group>
               </Row>
             </Form>
-          }
-          {
-            modalPage === 2 &&
+          </Modal.Body>)
+        }
+        {
+          modalPage === 2 &&
+          (<Modal.Body>
             <Form>
               <Row className='tx-info-inputs'>
                 {transaction.decodedTx.vin.map((input, index) => {
@@ -184,8 +187,8 @@ const CreateTxModal = (props) => {
                 <Form.Control as='textarea' col='6' value={transaction.hex} disabled />
               </Form.Group>
             </Form>
-          }
-        </Modal.Body>
+          </Modal.Body>)
+        }
         <Modal.Footer>
           {modalPage === 1 && <Button onClick={handleTxCreate}>Create</Button>}
           {modalPage === 2 && (<>
@@ -208,7 +211,7 @@ const CreateTxModal = (props) => {
               <div className='broadcast-error'>Failed to Broadcast tx</div>
             }
             {
-              broadcasted.txid && 
+              broadcasted.txid &&
               "Transaction successfully broadcast"
             }
           </Toast.Header>

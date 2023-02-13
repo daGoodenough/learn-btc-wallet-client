@@ -30,7 +30,7 @@ const KeysList = () => {
           return (
             <>
               <tr onClick={() => handleKeyClick(key)}>
-                <td>{key.keyName}</td>
+                <td className='key-name'>{key.keyName}</td>
                 <td>{key.publicKey}</td>
               </tr>
                 <KeyInfoModal

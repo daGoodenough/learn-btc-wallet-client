@@ -14,7 +14,7 @@ const WalletPage = () => {
   const { wallets } = useSelector(state => state);
   const wallet = wallets.find(wallet => wallet._id === walletId);
   const [modalShow, setModalShow] = useState(false)
-  const [toastMessage, setToastMessage] = useState({newBalance: null, error: null});
+  const [toastMessage, setToastMessage] = useState({ newBalance: null, error: null });
   const [toastShow, setToastShow] = useState(false);
 
   if (!wallet) {
@@ -24,57 +24,57 @@ const WalletPage = () => {
   const handleFundClick = async () => {
     dispatch(fundWallet(wallet._id,
       (newBalance, error) => {
-          setToastMessage({newBalance, error})
-          setToastShow(true);
+        setToastMessage({ newBalance, error })
+        setToastShow(true);
       }
     ));
   }
 
   return (
     <>
-    <Container className='mt-2 wallet-container'>
-      <Row className='text-center'>
-        <h3>{wallet.walletName || 'Address Name'}</h3>
-      </Row>
-      <Row className='mt-3'>
-        <Col xs={8}>
-          <div className='wallet-page-address-container'>
-            <div className='sub-descriptor'>Address</div>
-            <h4 className='wallet-page-address'>{wallet?.address}</h4>
-          </div>
-        </Col>
-        <Col xs={4}>
-          <div className='wallet-balance'>
-            {(wallet.balance * 1e8).toLocaleString()} sats
-          </div>
-        </Col>
-      </Row>
-      <Row xs="auto" className='justify-content-between mt-2'>
-        <Col>
-          <Button onClick={() => setModalShow(true)}>Create Transaction</Button>
-        </Col>
-        <Col>
-          <Button onClick={handleFundClick}>Fund Address</Button>
-        </Col>
-      </Row>
-      <Row>
-        <div className='section-title'>Keys</div>
-        <div className='section-subtitle'>Key pairs used in this address</div>
-        {wallet?.keys ? <WalletKeyList keyIds={wallet.keys} /> : <div>No Keys</div>}
-      </Row>
+      <Container className='mt-2 wallet-container'>
+        <Row className='text-center'>
+          <h3>{wallet.walletName || 'Address Name'}</h3>
+        </Row>
+        <Row className='mt-3'>
+          <Col xs={8}>
+            <div className='wallet-page-address-container'>
+              <div className='sub-descriptor'>Address</div>
+              <h4 className='wallet-page-address'>{wallet?.address}</h4>
+            </div>
+          </Col>
+          <Col xs={4}>
+            <div className='wallet-balance'>
+              {(wallet.balance * 1e8).toLocaleString()} sats
+            </div>
+          </Col>
+        </Row>
+        <Row xs="auto" className='justify-content-between mt-2'>
+          <Col>
+            <Button onClick={() => setModalShow(true)}>Create Transaction</Button>
+          </Col>
+          <Col>
+            <Button onClick={handleFundClick}>Fund Address</Button>
+          </Col>
+        </Row>
+        <Row>
+          <div className='section-title'>Keys</div>
+          <div className='section-subtitle'>Key pairs used in this address</div>
+          {wallet?.keys ? <WalletKeyList keyIds={wallet.keys} /> : <div>No Keys</div>}
+        </Row>
 
-      <Row>
-        <div className='section-title'>UTXOs</div>
-        <div className='section-subtitle'>Unspent transactions to this address</div>
-        {wallet?.transactions ? <WalletTxList transactions={wallet.transactions} /> : <div>No Keys</div>}
-      </Row>
+        <Row>
+          <div className='section-title'>UTXOs</div>
+          <div className='section-subtitle'>Unspent transactions to this address</div>
+          {wallet?.transactions ? <WalletTxList transactions={wallet.transactions} /> : <div>No Keys</div>}
+        </Row>
+      </Container>
       <CreateTxModal
         show={modalShow}
         onHide={() => setModalShow(false)}
         address={wallet}
       />
-    </Container>
-    <ToastContainer position={'top-center'}>
+      <ToastContainer position={'top-center'}>
         <Toast
           onClose={() => setToastShow(false)}
           show={toastShow}
@@ -88,7 +88,7 @@ const WalletPage = () => {
               <div className='broadcast-error'>Failed to fund wallet</div>
             }
             {
-              toastMessage.newBalance && 
+              toastMessage.newBalance &&
               "Wallet Funded & 1 Block Mined"
             }
           </Toast.Header>
@@ -103,7 +103,7 @@ const WalletPage = () => {
           </Toast.Body>
         </Toast>
       </ToastContainer>
-      </>
+    </>
   );
 }
 

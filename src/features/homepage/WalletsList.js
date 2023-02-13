@@ -22,10 +22,9 @@ const WalletsList = () => {
           {wallets.map((wallet) => {
             return (
               <tr key={wallet._id} onClick={() => handleWalletClick(wallet._id)}>
-                <td>{wallet.walletName || 'name'}</td>
+                <td className='address-name'>{wallet.walletName || 'name'}</td>
                 <td>{wallet.address}</td>
-                <td>{wallet.keys.map(key => key)}</td>
-                <td>{wallet.type}</td>
+                <td className='address-type'>{wallet.type}</td>
               </tr>
             )
           })}

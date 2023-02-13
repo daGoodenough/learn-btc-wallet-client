@@ -1,5 +1,5 @@
 import { Col, Table } from 'react-bootstrap';
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
 
 import TxInfoModal from '../transactions/TxInfoModal';
 
@@ -20,14 +20,13 @@ const WalletTxList = ({ transactions }) => {
   return (
     <>
       <Col>
-        <Table variant='dark' borderless hover>
+        <Table variant='dark' borderless hover responsive>
           <tbody>
             {transactions.map(transaction => {
               return (
-                <>
+                <Fragment key={transaction._id}>
                   <tr
                     className='d-flex justify-content-between'
-                    key={transaction._id}
                     onClick={() => handleTxClick(transaction)}
                   >
                     <td>
@@ -41,7 +40,7 @@ const WalletTxList = ({ transactions }) => {
                       </div>
                     </td>
                   </tr>
-                </>
+                </Fragment>
               )
             })}
           </tbody>
