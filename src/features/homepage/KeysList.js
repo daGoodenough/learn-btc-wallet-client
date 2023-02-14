@@ -1,6 +1,6 @@
 import { Table } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
-import { useState } from 'react';
+import { useState, Fragment } from 'react';
 
 import KeyInfoModal from '../keys/KeyInfoModal';
 
@@ -28,7 +28,7 @@ const KeysList = () => {
       <tbody>
         {keys.map(key => {
           return (
-            <>
+            <Fragment key={key._id}>
               <tr onClick={() => handleKeyClick(key)}>
                 <td className='key-name'>{key.keyName}</td>
                 <td>{key.publicKey}</td>
@@ -39,7 +39,7 @@ const KeysList = () => {
                   keyPair={selectedKey}
                   key={key._id}
                 />
-            </>
+            </ Fragment>
           )
         })}
       </tbody>

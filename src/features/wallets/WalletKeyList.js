@@ -36,7 +36,7 @@ const WalletKeyList = ({ keyIds, handleInfoClick }) => {
   return (
     <>
       <Col>
-        <Table variant='dark' borderless hover>
+        <Table variant='dark' borderless hover responsive>
           <tbody>
             {addrKeys.map((key, index) => {
               return (

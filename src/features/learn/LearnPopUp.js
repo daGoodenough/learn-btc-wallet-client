@@ -4,7 +4,7 @@ import { Modal } from 'react-bootstrap';
 import ReactMarkdown from "react-markdown";
 
 import { setModalShow } from './learnSlice';
-import topics from './topics';
+import topics from './topics/index';
 
 const LearnPopUp = (props) => {
   const dispatch = useDispatch();
