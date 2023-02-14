@@ -225,6 +225,17 @@ td div.pub-key {
   color: red;
 }
 
+.learn-keyword {
+  color: var(--primary);
+}
+
+svg:hover {
+  cursor: pointer;
+}
+svg {
+  margin-left: 5px;
+}
+
 @media (max-width: 1000px) {
   .wallet-balance {
     font-size: 1.2rem;

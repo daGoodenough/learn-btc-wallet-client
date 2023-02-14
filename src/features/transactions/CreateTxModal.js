@@ -1,12 +1,14 @@
 import { Modal, Button, Form, Row, Col, Toast, ToastContainer } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 import { useState } from 'react';
+import { InfoCircle } from 'react-bootstrap-icons';
 
 import { createRawP2pkh, broadcastTransaction } from '../../utils/bitcoind/rawTransactions';
+import { Fragment } from 'react';
 
 const CreateTxModal = (props) => {
   const dispatch = useDispatch();
-  const { address } = props;
+  const { address, handleInfoClick } = props;
   const [modalPage, setModalPage] = useState(1);
   const userAddrs = useSelector(state => state.wallets);
   const keyPair = useSelector(state => {
@@ -81,6 +83,10 @@ const CreateTxModal = (props) => {
           <Modal.Title id="contained-modal-title-vcenter">
             {modalPage === 1 && 'Create Transaction'}
             {modalPage === 2 && 'Transaction info'}
+            <InfoCircle
+              color='#0d6efd'
+              onClick={() => handleInfoClick('transaction')}
+            />
           </Modal.Title>
         </Modal.Header>
         {
@@ -97,13 +103,19 @@ const CreateTxModal = (props) => {
                   <Form.Select onChange={(e) => setRecipientAddr(e.target.value)}>
                     <option value={''}>Address</option>
                     {userAddrs.map(address => <option key={address._id} value={address.address}>{address.address}</option>)}
-                    <option value={'random'}>Random Address</option>
+                    {/* <option value={'random'}>Random Address</option> */}
                   </Form.Select>
                 </Form.Group>
               </Row>
               <Row>
                 <Form.Group as={Col} md={6} xs={12}>
-                  <Form.Label>UTXO selection</Form.Label>
+                  <Form.Label>
+                    UTXO selection
+                    <InfoCircle
+                      color='#0d6efd'
+                      onClick={() => handleInfoClick('utxo')}
+                    />
+                  </Form.Label>
                   <Form.Select onChange={(e) => setSelectedUtxo(e.target.value)}>
                     <option value={''}>Pick UTXO to spend:</option>
                     {address.transactions.map(utxo => {
@@ -112,13 +124,25 @@ const CreateTxModal = (props) => {
                   </Form.Select>
                 </Form.Group>
                 <Form.Group as={Col} md={6} xs={12}>
-                  <Form.Label>Amount (sats)</Form.Label>
+                  <Form.Label>
+                    Amount (sats)
+                    <InfoCircle
+                      color='#0d6efd'
+                      onClick={() => handleInfoClick('balance')}
+                    />
+                  </Form.Label>
                   <Form.Control onChange={(e) => setValue(e.target.value)} placeholder='Sats are whole numbers' type='text' pattern="\d*" />
                 </Form.Group>
               </Row>
               <Row>
                 <Form.Group as={Col} md={6} xs={12}>
-                  <Form.Label>Fee</Form.Label>
+                  <Form.Label>
+                    Fee
+                    <InfoCircle
+                      color='#0d6efd'
+                      onClick={() => handleInfoClick('fee')}
+                    />
+                  </Form.Label>
                   <Form.Select onChange={(e) => setSelectedFee(e.target.value)}>
                     <option value={''}>Choose fee rate</option>
                     <option value={1}>1 sat/vbyte (slow)</option>
@@ -127,7 +151,13 @@ const CreateTxModal = (props) => {
                   </Form.Select>
                 </Form.Group>
                 <Form.Group as={Col} md={6} xs={12}>
-                  <Form.Label>Network</Form.Label>
+                  <Form.Label>
+                    Network
+                    <InfoCircle
+                      color='#0d6efd'
+                      onClick={() => handleInfoClick('regtest')}
+                    />
+                  </Form.Label>
                   <Form.Control value={"regtest"} disabled />
                 </Form.Group>
               </Row>
@@ -141,17 +171,35 @@ const CreateTxModal = (props) => {
               <Row className='tx-info-inputs'>
                 {transaction.decodedTx.vin.map((input, index) => {
                   return (
-                    <>
-                      <h5 key={index}>Input {index + 1}</h5>
+                    <Fragment key={index}>
+                      <h5>
+                        Input {index + 1}
+                        <InfoCircle
+                          color='#0d6efd'
+                          onClick={() => handleInfoClick('transactionInput')}
+                        />
+                      </h5>
                       <Form.Group as={Col} md={6}>
-                        <Form.Label>Input txid</Form.Label>
+                        <Form.Label>
+                          Input txid
+                          <InfoCircle
+                            color='#0d6efd'
+                            onClick={() => handleInfoClick('txid')}
+                          />
+                        </Form.Label>
                         <Form.Control disabled value={input.txid} as='textarea' />
                       </Form.Group>
                       <Form.Group as={Col} md={6}>
-                        <Form.Label>Script Sig ASM</Form.Label>
+                        <Form.Label>
+                          Script Sig
+                          <InfoCircle
+                            color='#0d6efd'
+                            onClick={() => handleInfoClick('scriptSig')}
+                          />
+                        </Form.Label>
                         <Form.Control disabled value={input.scriptSig.asm} as='textarea' />
                       </Form.Group>
-                    </>
+                    </Fragment>
                   )
                 })}
               </Row>
@@ -160,21 +208,45 @@ const CreateTxModal = (props) => {
                   return (
                     <div key={output.scriptPubKey + index}>
                       <Row className='tx-info-outputs' >
-                        <h5>Output {index + 1}</h5>
+                        <h5>
+                          Output {index + 1}
+                          <InfoCircle
+                            color='#0d6efd'
+                            onClick={() => handleInfoClick('transactionOutput')}
+                          />
+                        </h5>
                         <Form.Group md={6} as={Col}>
                           <Form.Label>Recieving Address</Form.Label>
                           <Form.Control as='textarea' value={output.scriptPubKey.address} disabled />
                         </Form.Group>
                         <Form.Group md={6} as={Col}>
-                          <Form.Label>Amount (sats)</Form.Label>
+                          <Form.Label>
+                            Amount (sats)
+                            <InfoCircle
+                              color='#0d6efd'
+                              onClick={() => handleInfoClick('balance')}
+                            />
+                          </Form.Label>
                           <Form.Control value={output.value * 1e8} disabled />
                         </Form.Group>
                         <Form.Group as={Col} md={3}>
-                          <Form.Label>Address Type</Form.Label>
+                          <Form.Label>
+                            Address Type
+                            <InfoCircle
+                              color='#0d6efd'
+                              onClick={() => handleInfoClick('addressType')}
+                            />
+                          </Form.Label>
                           <Form.Control as='textarea' value={output.scriptPubKey.type} disabled />
                         </Form.Group>
                         <Form.Group as={Col} md={9}>
-                          <Form.Label>Locking Script</Form.Label>
+                          <Form.Label>
+                            Locking Script
+                            <InfoCircle
+                              color='#0d6efd'
+                              onClick={() => handleInfoClick('lockingScript')}
+                            />
+                          </Form.Label>
                           <Form.Control as='textarea' value={output.scriptPubKey.asm} disabled />
                         </Form.Group>
                       </Row>
@@ -183,7 +255,13 @@ const CreateTxModal = (props) => {
                 })
               }
               <Form.Group>
-                <Form.Label>Raw Transaction</Form.Label>
+                <Form.Label>
+                  Raw Transaction
+                  <InfoCircle
+                    color='#0d6efd'
+                    onClick={() => handleInfoClick('rawTransaction')}
+                  />
+                </Form.Label>
                 <Form.Control as='textarea' col='6' value={transaction.hex} disabled />
               </Form.Group>
             </Form>
@@ -194,6 +272,10 @@ const CreateTxModal = (props) => {
           {modalPage === 2 && (<>
             <Button onClick={() => setModalPage(1)}>Back</Button>
             <Button onClick={() => handleBroadcast()}>Broadcast Tx</Button>
+            <InfoCircle
+              color='#0d6efd'
+              onClick={() => handleInfoClick('broadcastTransaction')}
+            />
           </>)}
         </Modal.Footer>
       </Modal>

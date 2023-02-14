@@ -1,7 +1,15 @@
 import { Modal, Row, Form, Col } from 'react-bootstrap';
+import { useDispatch } from 'react-redux';
+import { changeLearnModal } from '../learn/learnSlice';
+import { InfoCircle } from 'react-bootstrap-icons';
 
 const KeyInfoModal = (props) => {
-  const {keyPair} = props;
+  const dispatch = useDispatch();
+  const { keyPair } = props;
+
+  const handleInfoClick = (topic) => {
+    dispatch(changeLearnModal({ modalShow: true, topic }))
+  }
   return (
     <Modal
       {...props}
@@ -16,7 +24,13 @@ const KeyInfoModal = (props) => {
       </Modal.Header>
       <Modal.Body>
         <Form.Group className="mb-3">
-          <Form.Label>Private Key</Form.Label>
+          <Form.Label>
+            Private Key
+            <InfoCircle
+              color='#0d6efd'
+              onClick={() => handleInfoClick('privateKey')}
+            />
+          </Form.Label>
           <Form.Control
             as="textarea"
             value={keyPair?.privateKey}
@@ -24,7 +38,13 @@ const KeyInfoModal = (props) => {
           />
         </Form.Group>
         <Form.Group className="mb-3">
-          <Form.Label>Public Key</Form.Label>
+          <Form.Label>
+            Public Key
+            <InfoCircle
+              color='#0d6efd'
+              onClick={() => handleInfoClick('publicKey')}
+            />
+          </Form.Label>
           <Form.Control
             as="textarea"
             value={keyPair?.publicKey}
@@ -32,7 +52,13 @@ const KeyInfoModal = (props) => {
           />
         </Form.Group>
         <Form.Group className="mb-3">
-          <Form.Label>WIF</Form.Label>
+          <Form.Label>
+            WIF
+            <InfoCircle
+              color='#0d6efd'
+              onClick={() => handleInfoClick('wif')}
+            />
+          </Form.Label>
           <Form.Control
             as="textarea"
             value={keyPair?.wif}
@@ -40,15 +66,27 @@ const KeyInfoModal = (props) => {
           />
         </Form.Group>
         <Row className='justify-content-between text-center'>
-          <Form.Group as={Col} md={3} sm={12}className="mb-3">
-            <Form.Label>Compressed?</Form.Label>
+          <Form.Group as={Col} md={3} sm={12} className="mb-3">
+            <Form.Label>
+              Compressed?
+              <InfoCircle
+                color='#0d6efd'
+                onClick={() => handleInfoClick('compressed')}
+              />
+            </Form.Label>
             <Form.Control
               value={keyPair?.isCompressed}
               disabled
             />
           </Form.Group>
           <Form.Group as={Col} md={3} sm={12} className="mb-3">
-            <Form.Label>Network</Form.Label>
+            <Form.Label>
+              Network
+              <InfoCircle
+                color='#0d6efd'
+                onClick={() => handleInfoClick('network')}
+              />
+            </Form.Label>
             <Form.Control
               value={keyPair?.network}
               disabled

@@ -4,6 +4,8 @@ import { useDispatch } from 'react-redux';
 
 import { generatePrivKey, generatePubKey } from './keyUtils';
 import { saveKeyPair } from './keySlice';
+import { InfoCircle } from 'react-bootstrap-icons';
+import { changeLearnModal } from '../learn/learnSlice';
 
 const CreateKeyModal = (props) => {
   const dispatch = useDispatch();
@@ -20,6 +22,7 @@ const CreateKeyModal = (props) => {
     setKeyName('');
     setErrorMessages({});
     setPrivKey('');
+    setActivePage(1);
   }, [props.show]);
 
 
@@ -30,6 +33,10 @@ const CreateKeyModal = (props) => {
       </Pagination.Item>
     );
   });
+
+  const handleInfoClick = (topic) => {
+    dispatch(changeLearnModal({ modalShow: true, topic }));
+  };
 
   const handleGeneratePrivKeyClick = async (e) => {
     e.preventDefault();
@@ -66,7 +73,9 @@ const CreateKeyModal = (props) => {
       privKey.wifCompressed :
       privKey.wifUncompressed;
 
-    dispatch(saveKeyPair(keyName, privateKey, wif, publicKey, compressed));
+    dispatch(saveKeyPair(keyName, privateKey, wif, publicKey, compressed, () => {
+      props.onHide();
+    }));
     setErrorMessages({});
   };
 
@@ -102,7 +111,12 @@ const CreateKeyModal = (props) => {
           <Form>
             <Row>
               <Form.Group as={Col} className="mb-3">
-                <Form.Label>Private Key</Form.Label>
+                <Form.Label>Private Key
+                  <InfoCircle
+                    color='#0d6efd'
+                    onClick={() => handleInfoClick('privateKey')}
+                  />
+                </Form.Label>
                 <Form.Control
                   as="textarea"
                   value={privKey.privateKey}
@@ -115,6 +129,10 @@ const CreateKeyModal = (props) => {
                 md={2} sm={12}
               >
                 <button onClick={(e => handleGeneratePrivKeyClick(e))}>Generate</button>
+                <InfoCircle
+                  color='#0d6efd'
+                  onClick={() => handleInfoClick('generatePrivateKey')}
+                />
               </Col>
             </Row>
           </Form>
@@ -123,9 +141,18 @@ const CreateKeyModal = (props) => {
             <Row>
               <Form.Group as={Col} className="mb-3">
                 <Row>
-                  <Form.Label as={Col}>Public Key</Form.Label>
-                  <Col>
+                  <Form.Label as={Col}>Public Key
+                    <InfoCircle
+                      color='#0d6efd'
+                      onClick={() => () => handleInfoClick('publicKey')}
+                    />
+                  </Form.Label>
+                  <Col className='d-flex align-items-center'>
                     <Form.Check onChange={(e) => setCompressed(e.target.checked)} checked={compressed} type='switch' label="Compressed" />
+                    <InfoCircle
+                      color='#0d6efd'
+                      onClick={() => handleInfoClick('compressed')}
+                    />
                   </Col>
                 </Row>
                 <Form.Control
@@ -140,6 +167,10 @@ const CreateKeyModal = (props) => {
                 md={2} sm={12}
               >
                 <button onClick={(e) => handleGeneratePubKeyClick(e)}>Generate</button>
+                <InfoCircle
+                  color='#0d6efd'
+                  onClick={() => () => handleInfoClick('generatePublicKey')}
+                />
               </Col>
             </Row>
           </Form>
@@ -213,7 +244,13 @@ const CreateKeyModal = (props) => {
             </Row>
             <Row>
               <Form.Group as={Col} className="mb-3">
-                <Form.Label>Private Key</Form.Label>
+                <Form.Label>
+                  Private Key
+                  <InfoCircle
+                    color='#0d6efd'
+                    onClick={() => handleInfoClick('privateKey')}
+                  />
+                </Form.Label>
                 <Form.Control
                   as="textarea"
                   value={privKey.privateKey}
@@ -223,7 +260,13 @@ const CreateKeyModal = (props) => {
             </Row>
             <Row>
               <Form.Group as={Col} className="mb-3">
-                <Form.Label>WIF</Form.Label>
+                <Form.Label>
+                  WIF
+                  <InfoCircle
+                    color='#0d6efd'
+                    onClick={() => handleInfoClick('wif')}
+                  />
+                </Form.Label>
                 <Form.Control
                   as="textarea"
                   value={compressed ? privKey.wifCompressed : privKey.wifUncompressed}
@@ -234,7 +277,13 @@ const CreateKeyModal = (props) => {
             <Row>
               <Form.Group as={Col} className="mb-3">
                 <Row>
-                  <Form.Label as={Col}>Public Key</Form.Label>
+                  <Form.Label>
+                    Public Key
+                    <InfoCircle
+                      color='#0d6efd'
+                      onClick={() => handleInfoClick('publicKey')}
+                    />
+                  </Form.Label>
                 </Row>
                 <Form.Control
                   value={compressed ? pubKey.compressed : pubKey.uncompressed}

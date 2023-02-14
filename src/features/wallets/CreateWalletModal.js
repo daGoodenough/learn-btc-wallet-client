@@ -3,6 +3,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useState, useEffect } from 'react';
 
 import { createWallet } from './walletSlice';
+import { InfoCircle } from 'react-bootstrap-icons';
+import { changeLearnModal } from '../learn/learnSlice';
 
 const CreateWalletModal = (props) => {
   const dispatch = useDispatch();
@@ -21,6 +23,10 @@ const CreateWalletModal = (props) => {
     setFormErrors('');
   }, [props.show]);
 
+  const handleInfoClick = (topic) => {
+    dispatch(changeLearnModal({ modalShow: true, topic }));
+  };
+
   const handleWalletCreate = () => {
     const errorsObj = {};
     if (!numAddrs) {
@@ -34,13 +40,13 @@ const CreateWalletModal = (props) => {
     }
     if (!addrName || addrName.length > 20) {
       errorsObj.addrName = "Address name must be less than 20 characters"
-      if(!addrName) {
+      if (!addrName) {
         errorsObj.addrName = "Name your address";
       };
     }
 
     setFormErrors(errorsObj);
-    
+
     if (numAddrs && walletKeys && addrType && addrName) {
       dispatch(createWallet(addrType, walletKeys, addrName));
       setFormErrors({});
@@ -57,6 +63,10 @@ const CreateWalletModal = (props) => {
       <Modal.Header closeButton closeVariant='white'>
         <Modal.Title id="contained-modal-title-vcenter">
           Create Address
+          <InfoCircle
+            color='#0d6efd'
+            onClick={() => handleInfoClick('address')}
+          />
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
@@ -65,7 +75,13 @@ const CreateWalletModal = (props) => {
             <Form.Group as={Col} md={6} sm={12}
               onChange={(e) => setNumAddrs(e.target.value)}
             >
-              <h5>Step 1: Single or Multi?</h5>
+              <h5>
+                Step 1: Single or Multi?
+                <InfoCircle
+                  color='#0d6efd'
+                  onClick={() => handleInfoClick('singleOrMulti')}
+                />
+              </h5>
               <Form.Check
                 inline
                 label="Single Signature"
@@ -87,7 +103,12 @@ const CreateWalletModal = (props) => {
               as={Col} md={6} sm={12}
               onChange={(e) => setWalletKeys(e.target.value)}
             >
-              <h5>Step 2: Key(s)</h5>
+              <h5>Step 2: Key(s)
+                <InfoCircle
+                  color='#0d6efd'
+                  onClick={() => handleInfoClick('singleOrMulti')}
+                />
+              </h5>
               <Form.Select aria-label="select keys">
                 <option>Choose which key pair to use</option>
                 {
@@ -107,7 +128,13 @@ const CreateWalletModal = (props) => {
               as={Col} md={6} sm={12}
               onChange={(e) => setAddrType(e.target.id)}
             >
-              <h5>Step 3: Address Type</h5>
+              <h5>
+                Step 3: Address Type
+                <InfoCircle
+                  color='#0d6efd'
+                  onClick={() => handleInfoClick('addressTypes')}
+                />
+              </h5>
               <Form.Check
                 inline
                 label="p2pkh"

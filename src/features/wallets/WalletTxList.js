@@ -3,7 +3,7 @@ import { Fragment, useState } from 'react';
 
 import TxInfoModal from '../transactions/TxInfoModal';
 
-const WalletTxList = ({ transactions }) => {
+const WalletTxList = ({ transactions, handleInfoClick }) => {
   const [modalShow, setModalShow] = useState(false);
   const [selectedTx, setSelectedTx] = useState({});
 
@@ -49,6 +49,7 @@ const WalletTxList = ({ transactions }) => {
               onHide={handleModalHide}
               tx={selectedTx}
               key={'tx'}
+              handleInfoClick={handleInfoClick}
             />
         </Table>
       </Col>

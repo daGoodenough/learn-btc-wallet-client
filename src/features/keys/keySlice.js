@@ -32,7 +32,7 @@ export const fetchUserKeys = () => dispatch => {
 };
 
 export const saveKeyPair =
-  (keyName, privateKey, wif, publicKey, compressed) =>
+  (keyName, privateKey, wif, publicKey, compressed, callback) =>
     dispatch => {
       axios
         .post(`${BASE_URL}/api/keys`, {
@@ -42,8 +42,15 @@ export const saveKeyPair =
           publicKey,
           compressed,
         },
-          config)
-        .then(response => dispatch(addKey(response.data)))
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('token')}`
+            }
+          })
+        .then(response => {
+          dispatch(addKey(response.data))
+          callback();
+        })
         .catch(error => console.error(error))
     }
 

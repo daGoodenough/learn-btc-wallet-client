@@ -2,8 +2,9 @@ import { Table, Col } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { useState, Fragment } from 'react'
 import KeyInfoModal from '../keys/KeyInfoModal';
+import { InfoCircle } from 'react-bootstrap-icons';
 
-const WalletKeyList = ({ keyIds }) => {
+const WalletKeyList = ({ keyIds, handleInfoClick }) => {
   const userKeys = useSelector(state => state.keys);
 
   const addrKeys = keyIds?.reduce((keys, keyId) => {
@@ -45,13 +46,19 @@ const WalletKeyList = ({ keyIds }) => {
                     onClick={() => handleKeyClick(key)}
                   >
                     <td className='key-name'>
-                        {key.keyName}
+                      {key.keyName}
                     </td>
                     <td>
                       <div className='pub-key'>
                         {key.publicKey}
                       </div>
-                      <div className='sub-descriptor'>Pub Key</div>
+                      <div className='sub-descriptor'>
+                        Pub Key
+                        <InfoCircle
+                          color='#0d6efd'
+                          onClick={() => handleInfoClick('publicKey')}
+                        />
+                      </div>
                     </td>
                   </tr>
                 </Fragment>

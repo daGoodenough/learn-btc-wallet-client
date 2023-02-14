@@ -1,7 +1,15 @@
 import { Nav } from 'react-bootstrap';
-import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { InfoCircle } from 'react-bootstrap-icons';
+import { changeLearnModal } from '../learn/learnSlice';
 
-const FeaturesNav = ({activeTab, changeNavTab}) => {
+const FeaturesNav = ({ activeTab, changeNavTab }) => {
+  const dispatch = useDispatch();
+
+  const handleInfoClick = (topic) => {
+    dispatch(changeLearnModal({ modalShow: true, topic }));
+  };
+
   return (
     <Nav
       justify
@@ -12,17 +20,28 @@ const FeaturesNav = ({activeTab, changeNavTab}) => {
     >
       <Nav.Item>
         <Nav.Link className='feature-nav' eventKey='addresses'>
-          Addresses
+          Addresses <InfoCircle
+            color='#0d6efd'
+            onClick={() => handleInfoClick('address')}
+          />
         </Nav.Link>
       </Nav.Item>
       <Nav.Item>
         <Nav.Link className='feature-nav' eventKey='keys'>
           Keys
+          <InfoCircle
+            color='#0d6efd'
+            onClick={() => handleInfoClick('key')}
+          />
         </Nav.Link>
       </Nav.Item>
       <Nav.Item>
         <Nav.Link className='feature-nav' eventKey='transactions'>
           Transactions
+          <InfoCircle
+            color='#0d6efd'
+            onClick={() => handleInfoClick('transaction')}
+          />
         </Nav.Link>
       </Nav.Item>
     </Nav>
