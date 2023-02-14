@@ -12,7 +12,9 @@ const LearnPopUp = (props) => {
   const {modalShow, topic} = useSelector(state => state.learn)
 
   useEffect(() => {
-    setMarkdown(topics[topic])
+    if(topic){
+      setMarkdown(topics[topic])
+    }
   }, [topic]);
   return (
     <Modal

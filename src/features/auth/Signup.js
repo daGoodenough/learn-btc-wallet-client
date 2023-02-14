@@ -3,6 +3,7 @@ import { Card, Form, Container, Row, Col, Button, Nav } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
 import { InfoCircle } from 'react-bootstrap-icons';
+import { changeLearnModal } from '../learn/learnSlice';
 
 function Signup() {
   const { errorMessage } = useSelector(state => state.auth)
@@ -12,6 +13,7 @@ function Signup() {
   const handleSignup = (e) => {
     dispatch(signup(e, () => {
       navigate('/')
+      dispatch(changeLearnModal({modalShow: true, topic: 'intro'}));
     }));
   };
 
