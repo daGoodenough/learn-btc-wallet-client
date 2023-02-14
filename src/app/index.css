@@ -71,6 +71,11 @@ td.key-name {
   font-weight: bold;
 }
 
+.learn-modal.modal-header {
+  border-bottom: 0;
+  margin-bottom: -25px;
+}
+
 tr:hover {
   cursor: pointer;
 }

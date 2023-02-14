@@ -5,11 +5,11 @@ import { useEffect } from 'react';
 import { fetchCurrentUser } from '../features/auth/authSlice';
 import { fetchUserKeys } from '../features/keys/keySlice';
 import { fetchUserWallets } from '../features/wallets/walletSlice';
+import LearnPopUp from '../features/learn/LearnPopUp';
 
 function App() {
   const dispatch = useDispatch();
   const { token } = useSelector((state) => state.auth);
-  const { keys } = useSelector((state) => state);
 
   useEffect(() => {
     if (token) {
@@ -23,6 +23,7 @@ function App() {
     <div className="App">
       <TopNav />
       <Routes />
+      <LearnPopUp />
     </div>
   );
 }
