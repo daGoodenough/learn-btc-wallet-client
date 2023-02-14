@@ -42,7 +42,11 @@ export const createWallet = (addrType, keys, name) => dispatch => {
     .post(
       `${BASE_URL}/api/wallets/${addrType}`,
       { keys, network: 'regtest', name },
-      authConfig
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`
+        },
+      }
     )
     .then(response => {
       dispatch(addWallet(response.data))
@@ -55,17 +59,17 @@ export const fundWallet = (addressId, callback) => dispatch => {
     .post(
       `${BASE_URL}/api/transactions/fund-wallet`,
       { addressId },
-      authConfig
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`
+        },
+      }
     )
     .then(response => {
       dispatch(changeBalance({ newBalance: response.data, addressId }));
       callback(response.data, null)
     })
     .catch(error => callback(null, error));
-
-  // axios
-  //   .post(`http://regtest-server:8080/1/generate`, {address, blocks: 10}).then(response => console.log(response))
-  
 }
 
 export const { addWallets, addWallet, changeBalance } = walletSlice.actions;

@@ -1,12 +1,15 @@
 import axios from 'axios';
-import { authConfig } from '../axiosConfigs';
 const BASE_URL = process.env.REACT_APP_API_HOST;
 
 export const createRawP2pkh = async (transactiondData) => {
   const transaction = await axios
     .post(`${BASE_URL}/api/transactions/create-raw/p2pkh`,
       transactiondData,
-      authConfig
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`
+        },
+      }
     )
     .then((response) => response.data)
     .catch(error => { throw new Error(error) });
@@ -18,7 +21,11 @@ export const broadcastTransaction = async (txHex) => {
   const txid = await axios
     .post(`${BASE_URL}/api/transactions/broadcast`,
       { txHex },
-      authConfig
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`
+        },
+      }
     )
     .then(response => response.data)
     .catch(error => { throw new Error(error.response.data) });
