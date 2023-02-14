@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  topic: 'privateKey',
-  modalShow: true,
+  topic: '',
+  modalShow: false,
 }
 
 export const learnSlice = createSlice({
@@ -10,14 +10,17 @@ export const learnSlice = createSlice({
   initialState,
   reducers: {
     changeTopic: (state, action) => {
-      return {...state, topic: action.payload};
+      return { ...state, topic: action.payload };
     },
     setModalShow: (state, action) => {
-      return { ...state, modalShow: action.payload};
+      return { ...state, modalShow: action.payload };
+    },
+    changeLearnModal: (state, action) => {
+      return action.payload;
     }
   }
 });
 
-export const { changeTopic, setModalShow} = learnSlice.actions;
+export const { changeTopic, setModalShow, changeLearnModal } = learnSlice.actions;
 
 export default learnSlice.reducer;
