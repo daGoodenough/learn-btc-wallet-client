@@ -26,7 +26,7 @@ console.log(txes);
             return (
               <tr>
                 <td>{tx.txid}</td>
-                <td>{tx.amount}</td>
+                <td>{(tx.amount * 1e8).toLocaleString()} sats</td>
               </tr>
             )
           })}

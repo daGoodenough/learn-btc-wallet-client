@@ -36,7 +36,7 @@ const WalletTxList = ({ transactions, handleInfoClick }) => {
                     </td>
                     <td>
                       <div>
-                        {transaction.amount}
+                        {(transaction.amount * 1e8).toLocaleString()} sats
                       </div>
                     </td>
                   </tr>

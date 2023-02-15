@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from 'axios';
-import { authConfig } from "../../utils/axiosConfigs";
 const BASE_URL = process.env.REACT_APP_API_HOST;
 
 const initialState = [];

@@ -141,7 +141,7 @@ const TxInfoModal = (props) => {
                                   onClick={() => handleInfoClick('balance')}
                                 />
                               </Form.Label>
-                              <Form.Control value={output.value * 1e8} disabled />
+                              <Form.Control value={(output.value * 1e8).toLocaleString()} disabled />
                             </Form.Group>
                             <Form.Group as={Col} md={3}>
                               <Form.Label>
