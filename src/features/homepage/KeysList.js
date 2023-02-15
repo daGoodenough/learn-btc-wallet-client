@@ -31,7 +31,10 @@ const KeysList = () => {
             <Fragment key={key._id}>
               <tr onClick={() => handleKeyClick(key)}>
                 <td className='key-name'>{key.keyName}</td>
-                <td>{key.publicKey}</td>
+                <td className='public-key'>
+                  {key.publicKey}
+                  <div className='sub-descriptor'>Pub Key</div>
+                  </td>
               </tr>
                 <KeyInfoModal
                   show={modalShow}

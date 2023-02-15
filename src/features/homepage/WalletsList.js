@@ -23,8 +23,14 @@ const WalletsList = () => {
             return (
               <tr key={wallet._id} onClick={() => handleWalletClick(wallet._id)}>
                 <td className='address-name'>{wallet.walletName || 'name'}</td>
-                <td>{wallet.address}</td>
-                <td className='address-type'>{wallet.type}</td>
+                <td className='d-flex justify-content-center flex-column align-items-center'>
+                  <div>{wallet.address}</div>
+                  <div className='sub-descriptor'>address</div>
+                  </td>
+                <td className='address-type'>
+                  <div>{wallet.type}</div>
+                  <div className='sub-descriptor'>address type</div>
+                  </td>
               </tr>
             )
           })}

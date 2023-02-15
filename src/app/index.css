@@ -64,6 +64,15 @@ td.address-type,
 td.key-name {
   min-width: max-content;
   overflow-wrap: normal;
+  text-align: end;
+}
+
+.sub-descriptor.home-txid {
+  text-align: center;
+}
+
+td.public-key {
+  text-align: end;
 }
 
 .modal-error-message {
@@ -90,6 +99,11 @@ tr:hover {
 
 td {
   color: rgb(172, 180, 156);
+  overflow-wrap: anywhere;
+}
+
+td.address {
+  flex-direction: column;
 }
 
 .sub-descriptor {

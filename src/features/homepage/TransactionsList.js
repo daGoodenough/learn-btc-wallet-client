@@ -25,7 +25,10 @@ console.log(txes);
           {txes.map(tx => {
             return (
               <tr>
-                <td>{tx.txid}</td>
+                <td>
+                  <div>{tx.txid}</div>
+                  <div className="sub-descriptor home-txid">txid</div>
+                  </td>
                 <td>{(tx.amount * 1e8).toLocaleString()} sats</td>
               </tr>
             )

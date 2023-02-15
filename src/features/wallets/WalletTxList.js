@@ -33,6 +33,9 @@ const WalletTxList = ({ transactions, handleInfoClick }) => {
                       <div>
                         {transaction.txid}
                       </div>
+                      <div className='sub-descriptor'>
+                        txid
+                      </div>
                     </td>
                     <td>
                       <div>
