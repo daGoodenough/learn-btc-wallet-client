@@ -4,14 +4,20 @@ import Home from '../features/homepage/Home';
 import Login from '../features/auth/Login';
 import Signup from '../features/auth/Signup';
 import WalletlPage from '../features/wallets/WalletPage';
+import LearnPage from '../features/learn/LearnPage';
 
 const Router = () => {
   return (
     <Routes>
       <Route 
         exact
-        path='/'
+        path='/wallet'
         element={<Home/>}
+      />
+      <Route 
+        exact
+        path='/learn'
+        element={<LearnPage />}
       />
       <Route 
         exact

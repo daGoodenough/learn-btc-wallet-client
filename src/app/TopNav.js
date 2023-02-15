@@ -36,9 +36,10 @@ const TopNav = () => {
     <>
       <Navbar variant="dark" expand='lg' collapseOnSelect>
         <Container>
-          <Navbar.Brand as={Link} to={'/'}>Learn BTC Wallet</Navbar.Brand>
+          <Navbar.Brand as={Link} to={'/wallet'}>Learn BTC Wallet</Navbar.Brand>
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
           <Navbar.Collapse className='justify-content-end'>
+              <NavDropdown.Item as={Link} to={'/learn'}>Learn</NavDropdown.Item>
             {
               username ? (
                 <>
@@ -66,7 +67,7 @@ const TopNav = () => {
                       );
                     })}
                     <NavDropdown.Divider />
-                    <NavDropdown.Item 
+                    <NavDropdown.Item
                       onClick={() => setWalletCreateModalShow(true)}
                     >
                       + Create Address
@@ -86,8 +87,8 @@ const TopNav = () => {
                     onHide={() => setWalletCreateModalShow(false)}
                   />
                   <KeyInfoModal
-                  show={keyInfoModalShow}
-                  onHide={() => handleKeyInfoModalHide()}
+                    show={keyInfoModalShow}
+                    onHide={() => handleKeyInfoModalHide()}
                     keyPair={selectedKey}
                   />
                 </>

@@ -8,6 +8,7 @@ import transaction from './transaction';
 import regtest from './regtest';
 import compressed from './compressed.js';
 import wif from './wif';
+import noData from './noData';
 
 const topics = {
   privateKey,
@@ -20,6 +21,7 @@ const topics = {
   regtest,
   compressed,
   wif,
+  noData,
 };
 
 export default topics

@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
 import { InfoCircle } from 'react-bootstrap-icons';
 
-import { changeLearnModal } from '../learn/learnSlice';
 
 function Login() {
   const { errorMessage } = useSelector(state => state.auth)
@@ -13,8 +12,7 @@ function Login() {
 
   const handleLocalLogin = (e) => {
     dispatch(localLogin(e, () => {
-      navigate('/');
-      dispatch(changeLearnModal({modalShow: true, topic: 'intro'}));
+      navigate('/learn');
     }));
   };
 
