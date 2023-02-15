@@ -2,7 +2,7 @@ const wif = `
 ## Wallet Import Format (WIF)
 WIF is a way of encoding a bitcoin private key so that it is more readable and has an added checksum for assurance.
 
-You can read about the encoding here: https://lnkd.in/dWfKv8Up
+You can read about the encoding [here](https://en.bitcoin.it/wiki/Wallet_import_format)
 
 A WIF string is a base 58 check encoded private key.
 

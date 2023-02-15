@@ -1,12 +1,5 @@
-const intro = `# Learn Bitcoin Wallet \n ---
-### The wallet that **helps you understand**
-##### The topic of Bitcoin is vast: 
-- *Seperation* of money and state
-- Financial *freedom*
-- Digital *sovereignty*
-- Proof of work *consensus*
-- Blockchain \n
-This wallet focuses on how to *use* bitcoin and *understand* what is going on under the hood.
+const intro = `## Getting Started \n ---
+##### This wallet focuses on how to *use* bitcoin and *understand* what is going on under the hood.
 ##### Some basic terms to understand:
 - **Wallet**: A tool to keep track of keys, addresses, and your balance of bitcoin.
 - **Address**: Your unique "ID" that people can send bitcoin to. Only the holder of the corresponding private key(s) can spend bitcoin spent to an address
@@ -16,7 +9,7 @@ This wallet focuses on how to *use* bitcoin and *understand* what is going on un
 If you still feel lost, follow along with the following steps.\n
 *Most terms in the wallet will have an "i" that can be clicked to learn more*
 ### Step-By-Step Guide to Get Started:
-*As you follow the guide there will be more instructions, or you can click "Show Guide" from the menu to see this page again.*\n
+*As you follow the guide there will be more instructions, or you can click "Guides" dropdown from the menu*\n
 ##### 1. Create a key pair by selecting the dropdown or clicking the "+ Key" button. 
 *A key pair consists of a private a public key pair*\n
 ##### 2. Create an address by selection the dropdown or clicking the "+ Address" button.
@@ -30,10 +23,6 @@ If you still feel lost, follow along with the following steps.\n
 \n
 ### Congralations! You just spent bitcoin from one address to another!
 *Start with step 1, and you will be guided from there*\n
-### Features For the Future:
-- New address types
-- Multi Signature Transactions
-- Lightning Network simulation
 `;
 
 export default intro;

@@ -9,6 +9,8 @@ import regtest from './regtest';
 import compressed from './compressed.js';
 import wif from './wif';
 import noData from './noData';
+import step2 from './step2';
+import step3 from './step3';
 
 const topics = {
   privateKey,
@@ -22,6 +24,8 @@ const topics = {
   compressed,
   wif,
   noData,
+  step2,
+  step3,
 };
 
 export default topics

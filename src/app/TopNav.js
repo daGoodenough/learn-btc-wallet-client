@@ -7,6 +7,7 @@ import { signout } from '../features/auth/authSlice';
 import KeyInfoModal from '../features/keys/KeyInfoModal';
 import CreateKeyModal from '../features/keys/CreateKeyModal';
 import CreateWalletModal from '../features/wallets/CreateWalletModal';
+import { changeLearnModal } from '../features/learn/learnSlice';
 
 const TopNav = () => {
   const dispatch = useDispatch();
@@ -39,7 +40,13 @@ const TopNav = () => {
           <Navbar.Brand as={Link} to={'/wallet'}>Learn BTC Wallet</Navbar.Brand>
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
           <Navbar.Collapse className='justify-content-end'>
-              <NavDropdown.Item as={Link} to={'/learn'}>Learn</NavDropdown.Item>
+              <Nav.Item as={Link} to={'/learn'}>Learn</Nav.Item>
+              <NavDropdown menuVariant='dark' title='Guides'>
+                <NavDropdown.Item onClick={() => dispatch(changeLearnModal({modalShow: true, topic: 'intro'}))}>Getting Started</NavDropdown.Item>
+                <NavDropdown.Item onClick={() => dispatch(changeLearnModal({modalShow: true, topic: 'step2'}))}>Step 2</NavDropdown.Item>
+                <NavDropdown.Item onClick={() => dispatch(changeLearnModal({modalShow: true, topic: 'step3'}))}>Step 3</NavDropdown.Item>
+
+              </NavDropdown>
             {
               username ? (
                 <>
