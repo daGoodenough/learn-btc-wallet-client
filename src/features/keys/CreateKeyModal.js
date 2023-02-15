@@ -75,6 +75,7 @@ const CreateKeyModal = (props) => {
 
     dispatch(saveKeyPair(keyName, privateKey, wif, publicKey, compressed, () => {
       props.onHide();
+      dispatch(changeLearnModal({modalShow: true, topic: 'step2'}));
     }));
     setErrorMessages({});
   };
