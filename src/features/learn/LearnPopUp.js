@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Modal } from 'react-bootstrap';
 import ReactMarkdown from "react-markdown";
 
-import { setModalShow } from './learnSlice';
+import { changeLearnModal, setModalShow } from './learnSlice';
 import topics from './topics/index';
 
 const LearnPopUp = (props) => {
@@ -13,13 +13,17 @@ const LearnPopUp = (props) => {
 
   useEffect(() => {
     if(topic){
-      setMarkdown(topics[topic])
+      if (topics[topic]){
+        setMarkdown(topics[topic]);
+      } else {
+        setMarkdown(topics['noData']);
+      }
     }
   }, [topic]);
   return (
     <Modal
       show={modalShow}
-      onHide={() => dispatch(setModalShow(false))}
+      onHide={() => dispatch(changeLearnModal({modalShow: false, topic: ''}))}
       size="lg"
       aria-labelledby="contained-modal-title-vcenter"
       centered
