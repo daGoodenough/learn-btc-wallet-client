@@ -1,6 +1,6 @@
 import { Modal, Button, Form, Row, Col, Toast, ToastContainer } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { InfoCircle } from 'react-bootstrap-icons';
 
 import { createRawP2pkh, broadcastTransaction } from '../../utils/bitcoind/rawTransactions';
@@ -24,13 +24,26 @@ const CreateTxModal = (props) => {
   const [broadcasted, setBroadcasted] = useState({ txid: '', value: null })
   const [errors, setErrors] = useState({});
 
+  useEffect(() => {
+    setModalPage(1);
+    setRecipientAddr('');
+    setSelectedUtxo('');
+    setValue(0);
+    setTransaction({});
+    setBroadcasted({txid: '', value: null});
+    setErrors({});
+  }, [props.show]);
+
   const handleTxCreate = async () => {
     try {
       const utxo = address.transactions.find(transaction => transaction._id === selectedUtxo);
       const errorObj = {};
-      if ((utxo?.amount * 1e8 + (selectedFee * 226)) < value) {
+      if ((utxo?.amount * 1e8) < Number(value)  + (Number(selectedFee) * 226)) {
         errorObj.amount = "The amount you are sending must be less than the UTXO value combined with the fee";
       };
+      if (Number.isNaN(parseInt(value))){
+        errorObj.amount = "Satoshis are whole numbers";
+      }
       if (!recipientAddr || !selectedUtxo || !selectedFee || !value) {
         errorObj.general = "Make sure all fields are filled";
       }
@@ -46,7 +59,7 @@ const CreateTxModal = (props) => {
           network: 'regtest',
           vout: utxo.vout,
           scriptPubKey: utxo.scriptPubKey,
-          value,
+          value: Math.round(value),
           recipientAddr,
         });
         setTransaction(transaction);
