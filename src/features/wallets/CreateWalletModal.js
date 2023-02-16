@@ -49,7 +49,9 @@ const CreateWalletModal = (props) => {
 
     if (numAddrs && walletKeys && addrType && addrName) {
       dispatch(createWallet(addrType, walletKeys, addrName));
+      dispatch(changeLearnModal({modalShow: true, topic: 'step3'}))
       setFormErrors({});
+      props.onHide()
     }
   }
 
