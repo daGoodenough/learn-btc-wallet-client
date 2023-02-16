@@ -1,10 +1,23 @@
 import { useSelector, useDispatch } from "react-redux";
-import { Link } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { signup } from "../auth/authSlice";
 import { changeLearnModal } from "../learn/learnSlice";
 
 const Banner = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { username } = useSelector((state) => state.auth);
+
+  const handleContinueAsGuest = () => {
+    const random = Math.round(Math.random() * 1000000);
+    dispatch(signup(
+      {
+        email: random + '@bitcoin.com',
+        username: 'guest' + random,
+        password: 'bitcoin'
+      }, () => navigate('/learn')
+    ))
+  }
 
   if (username) {
     return (
@@ -17,7 +30,7 @@ const Banner = () => {
   }
 
   return (
-    <header className="text-center">
+    <header className="text-center m-5">
       <h2>Welcome to the wallet that <strong>helps you understand</strong>!</h2>
       <h3>This wallet interacts <em>directly</em> with a Bitcoin Node in
         <span
@@ -25,7 +38,7 @@ const Banner = () => {
           onClick={() => dispatch(changeLearnModal({ modalShow: true, topic: "regtest" }))}>
           regtest
         </span> mode</h3>
-      <h4><Link to={'/login'}>Login or Create an account</Link> to get started</h4>
+      <h4><Link to={'/login'}>Login or Create an account</Link> to get started <Link onClick={handleContinueAsGuest}>or continue as guest</Link></h4>
     </header>
   )
 }

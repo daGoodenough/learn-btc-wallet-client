@@ -55,10 +55,12 @@ export const localLogin = (event, callback) => dispatch => {
 }
 
 export const signup = (event, callback) => dispatch => {
-  event.preventDefault();
-  const email = event.currentTarget[0].value;
-  const username = event.currentTarget[1].value;
-  const password = event.currentTarget[2].value;
+  if(event.currentTarget) {
+    event.preventDefault();
+  }
+  const email = event.currentTarget ? event.currentTarget[0].value : event.email;
+  const username = event.currentTarget ? event.currentTarget[1].value : event.username;
+  const password = event.currentTarget ? event.currentTarget[2].value : event.password;
 
   axios
     .post(`${BASE_URL}/auth/signup`, {
