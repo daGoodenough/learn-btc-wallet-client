@@ -19,6 +19,10 @@ export const walletSlice = createSlice({
         wallet => wallet._id === action.payload.addressId
       );
       wallet.balance = action.payload.newBalance;
+    },
+    removeAddress: (state, action) => {
+      const addrIndex = state.findIndex(obj => obj._id === action.payload);
+      state.splice(addrIndex, 1);
     }
   },
 });
@@ -70,8 +74,25 @@ export const fundWallet = (addressId, callback) => dispatch => {
       callback(response.data, null)
     })
     .catch(error => callback(null, error));
+};
+
+export const deleteAddress = (addressId, callback) => dispatch => {
+  axios
+    .delete(`${BASE_URL}/api/wallets`, {
+      params: {
+        id: addressId,
+      },
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      }
+    })
+    .then(() => {
+      dispatch(removeAddress(addressId))
+      callback();
+    })
+    .catch(error => {throw new Error(error)})
 }
 
-export const { addWallets, addWallet, changeBalance } = walletSlice.actions;
+export const { addWallets, addWallet, changeBalance, removeAddress } = walletSlice.actions;
 
 export default walletSlice.reducer;

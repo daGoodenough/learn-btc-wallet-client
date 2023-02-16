@@ -40,8 +40,8 @@ const TopNav = () => {
           <Navbar.Brand as={Link} to={'/wallet'}>Learn BTC Wallet</Navbar.Brand>
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
           <Navbar.Collapse className='justify-content-end'>
-              <Nav.Item as={Link} to={'/learn'}>Learn</Nav.Item>
-              <NavDropdown menuVariant='dark' title='Guides'>
+              <Nav.Item className='nav-learn' as={Link} to={'/learn'}>Learn</Nav.Item>
+              <NavDropdown  menuVariant='dark' title='Guides'>
                 <NavDropdown.Item onClick={() => dispatch(changeLearnModal({modalShow: true, topic: 'intro'}))}>Getting Started</NavDropdown.Item>
                 <NavDropdown.Item onClick={() => dispatch(changeLearnModal({modalShow: true, topic: 'step2'}))}>Step 2</NavDropdown.Item>
                 <NavDropdown.Item onClick={() => dispatch(changeLearnModal({modalShow: true, topic: 'step3'}))}>Step 3</NavDropdown.Item>

@@ -51,6 +51,11 @@ a.feature-nav.nav-link.active:hover {
   background-color: var(--primary);
 }
 
+.nav-learn {
+  color: var(--font1);
+  text-decoration: none;
+}
+
 .navbar-brand {
   color: var(--font1);
 }
@@ -257,6 +262,11 @@ svg:hover {
 }
 svg {
   margin-left: 5px;
+}
+
+.delete-icon:hover {
+  color: red;
+  cursor: pointer;
 }
 
 @media (max-width: 1000px) {

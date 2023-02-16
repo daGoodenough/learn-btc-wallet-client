@@ -1,9 +1,10 @@
 import { Container, Button, Row, Col, ToastContainer, Toast } from 'react-bootstrap';
 import { useSelector, useDispatch } from "react-redux";
-import { useParams } from "react-router";
+import {  useNavigate, useParams } from "react-router";
 import { useState } from 'react';
+import { Trash3 } from 'react-bootstrap-icons';
 
-import { fundWallet } from './walletSlice';
+import { deleteAddress, fundWallet } from './walletSlice';
 import WalletKeyList from './WalletKeyList';
 import WalletTxList from './WalletTxList';
 import CreateTxModal from '../transactions/CreateTxModal';
@@ -12,6 +13,7 @@ import { InfoCircle } from 'react-bootstrap-icons';
 
 const WalletPage = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { walletId } = useParams();
   const { wallets } = useSelector(state => state);
   const wallet = wallets.find(wallet => wallet._id === walletId);
@@ -40,8 +42,16 @@ const WalletPage = () => {
   return (
     <>
       <Container className='mt-2 wallet-container'>
-        <Row className='text-center'>
-          <h3>{wallet.walletName || 'Address Name'}</h3>
+        <Row className='text-center justify-content-center'>
+          <Col><h3>{wallet.walletName || 'Address Name'}</h3></Col>
+          <Col xs={1}className='justify-self-end'>
+            <Trash3 
+              onClick={() => dispatch(deleteAddress(wallet._id, () => navigate('/wallet')))}
+              className='delete-icon' 
+              size={20}
+            />
+          </Col>
+          
         </Row>
         <Row className='mt-3'>
           <Col xs={8}>
