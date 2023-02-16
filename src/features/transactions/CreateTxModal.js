@@ -5,6 +5,7 @@ import { InfoCircle } from 'react-bootstrap-icons';
 
 import { createRawP2pkh, broadcastTransaction } from '../../utils/bitcoind/rawTransactions';
 import { Fragment } from 'react';
+import { fetchUserWallets } from '../wallets/walletSlice';
 
 const CreateTxModal = (props) => {
   const dispatch = useDispatch();
@@ -47,11 +48,14 @@ const CreateTxModal = (props) => {
   const handleBroadcast = async () => {
     try {
       const txid = await broadcastTransaction(transaction.hex);
+
+      
       setBroadcasted({ txid, value, error: null });
-
+      
       props.onHide();
-
+      
       setTimeout(() => {
+        dispatch(fetchUserWallets());
         setToastShow(true);
       }, 2000);
     }

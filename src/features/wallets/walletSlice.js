@@ -66,6 +66,7 @@ export const fundWallet = (addressId, callback) => dispatch => {
     )
     .then(response => {
       dispatch(changeBalance({ newBalance: response.data, addressId }));
+      dispatch(fetchUserWallets());
       callback(response.data, null)
     })
     .catch(error => callback(null, error));
