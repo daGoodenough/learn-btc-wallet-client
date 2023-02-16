@@ -255,6 +255,7 @@ td div.pub-key {
 
 .learn-keyword {
   color: var(--primary);
+  font-weight: bold;
 }
 
 svg:hover {

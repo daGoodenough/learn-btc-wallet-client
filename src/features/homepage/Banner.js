@@ -32,11 +32,10 @@ const Banner = () => {
   return (
     <header className="text-center m-5">
       <h2>Welcome to the wallet that <strong>helps you understand</strong>!</h2>
-      <h3>This wallet interacts <em>directly</em> with a Bitcoin Node in
-        <span
+      <h3>This wallet interacts <em>directly</em> with a Bitcoin Node in <span
           className="learn-keyword"
           onClick={() => dispatch(changeLearnModal({ modalShow: true, topic: "regtest" }))}>
-          regtest
+           regtest
         </span> mode</h3>
       <h4><Link to={'/login'}>Login or Create an account</Link> to get started <Link onClick={handleContinueAsGuest}>or continue as guest</Link></h4>
     </header>
