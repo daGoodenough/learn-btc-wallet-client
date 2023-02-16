@@ -22,24 +22,36 @@ const CreateTxModal = (props) => {
   const [transaction, setTransaction] = useState({});
   const [toastShow, setToastShow] = useState(false);
   const [broadcasted, setBroadcasted] = useState({ txid: '', value: null })
+  const [errors, setErrors] = useState({});
 
   const handleTxCreate = async () => {
     try {
       const utxo = address.transactions.find(transaction => transaction._id === selectedUtxo);
+      const errorObj = {};
+      if ((utxo?.amount * 1e8 + (selectedFee * 226)) < value) {
+        errorObj.amount = "The amount you are sending must be less than the UTXO value combined with the fee";
+      };
+      if (!recipientAddr || !selectedUtxo || !selectedFee || !value) {
+        errorObj.general = "Make sure all fields are filled";
+      }
+      setErrors(errorObj);
 
-      const transaction = await createRawP2pkh({
-        address: address.address,
-        WIFs: [keyPair.wif],
-        utxoId: utxo.txid,
-        fee: selectedFee,
-        network: 'regtest',
-        vout: utxo.vout,
-        scriptPubKey: utxo.scriptPubKey,
-        value,
-        recipientAddr,
-      });
-      setTransaction(transaction);
-      setModalPage(2);
+      if (Object.keys(errorObj).length === 0) {
+
+        const transaction = await createRawP2pkh({
+          address: address.address,
+          WIFs: [keyPair.wif],
+          utxoId: utxo.txid,
+          fee: selectedFee,
+          network: 'regtest',
+          vout: utxo.vout,
+          scriptPubKey: utxo.scriptPubKey,
+          value,
+          recipientAddr,
+        });
+        setTransaction(transaction);
+        setModalPage(2);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -49,11 +61,11 @@ const CreateTxModal = (props) => {
     try {
       const txid = await broadcastTransaction(transaction.hex);
 
-      
+
       setBroadcasted({ txid, value, error: null });
-      
+
       props.onHide();
-      
+
       setTimeout(() => {
         dispatch(fetchUserWallets());
         setToastShow(true);
@@ -123,7 +135,7 @@ const CreateTxModal = (props) => {
                   <Form.Select onChange={(e) => setSelectedUtxo(e.target.value)}>
                     <option value={''}>Pick UTXO to spend:</option>
                     {address.transactions.map(utxo => {
-                      return <option key={utxo._id} value={utxo._id}>{utxo.amount}</option>
+                      return <option key={utxo._id} value={utxo._id}>{(utxo.amount * 1e8).toLocaleString()}</option>
                     })}
                   </Form.Select>
                 </Form.Group>
@@ -136,6 +148,7 @@ const CreateTxModal = (props) => {
                     />
                   </Form.Label>
                   <Form.Control onChange={(e) => setValue(e.target.value)} placeholder='Sats are whole numbers' type='text' pattern="\d*" />
+                  <div className='modal-error-message'>{errors.amount}</div>
                 </Form.Group>
               </Row>
               <Row>
@@ -166,6 +179,7 @@ const CreateTxModal = (props) => {
                 </Form.Group>
               </Row>
             </Form>
+            <div className='modal-error-message text-center'>{errors.general}</div>
           </Modal.Body>)
         }
         {
