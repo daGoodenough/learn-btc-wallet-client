@@ -1,6 +1,6 @@
 import { Navbar, Container, Nav, NavDropdown } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 
 import { signout } from '../features/auth/authSlice';
@@ -11,6 +11,7 @@ import { changeLearnModal } from '../features/learn/learnSlice';
 
 const TopNav = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { username } = useSelector((state) => state.auth);
   const { keys, wallets } = useSelector((state) => state);
   const [keyCreateModalShow, setKeyCreateModalShow] = useState(false);
@@ -20,6 +21,7 @@ const TopNav = () => {
 
   const handleSignout = () => {
     dispatch(signout());
+    navigate('/wallet');
     window.location.reload();
   }
 
