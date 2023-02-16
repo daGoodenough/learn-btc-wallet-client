@@ -33,7 +33,7 @@ const KeyInfoModal = (props) => {
           </Form.Label>
           <Form.Control
             as="textarea"
-            value={keyPair?.privateKey}
+            value={keyPair?.privateKey || ''}
             disabled
           />
         </Form.Group>

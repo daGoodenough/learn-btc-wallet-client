@@ -24,7 +24,7 @@ console.log(txes);
         <tbody>
           {txes.map(tx => {
             return (
-              <tr>
+              <tr key={tx._id}>
                 <td>
                   <div>{tx.txid}</div>
                   <div className="sub-descriptor home-txid">txid</div>

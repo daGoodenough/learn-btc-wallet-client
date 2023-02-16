@@ -23,7 +23,7 @@ const CreateTxModal = (props) => {
   const [toastShow, setToastShow] = useState(false);
   const [broadcasted, setBroadcasted] = useState({ txid: '', value: null })
   const [errors, setErrors] = useState({});
-
+  
   useEffect(() => {
     setModalPage(1);
     setRecipientAddr('');
@@ -33,7 +33,7 @@ const CreateTxModal = (props) => {
     setBroadcasted({txid: '', value: null});
     setErrors({});
   }, [props.show]);
-
+  
   const handleTxCreate = async () => {
     try {
       const utxo = address.transactions.find(transaction => transaction._id === selectedUtxo);
@@ -125,13 +125,13 @@ const CreateTxModal = (props) => {
               <Row>
                 <Form.Group as={Col} md={6} xs={12}>
                   <Form.Label>Send from</Form.Label>
-                  <Form.Control value={address.address} disabled />
+                  <Form.Control value={address.address || ''} disabled />
                 </Form.Group>
                 <Form.Group as={Col} md={6} xs={12}>
                   <Form.Label>Send to</Form.Label>
                   <Form.Select onChange={(e) => setRecipientAddr(e.target.value)}>
                     <option value={''}>Address</option>
-                    {userAddrs.map(address => <option key={address._id} value={address.address}>{address.address}</option>)}
+                    {userAddrs.map(address => <option key={address._id} value={address.address || ''}>{address.address || ''}</option>)}
                     {/* <option value={'random'}>Random Address</option> */}
                   </Form.Select>
                 </Form.Group>
@@ -147,7 +147,7 @@ const CreateTxModal = (props) => {
                   </Form.Label>
                   <Form.Select onChange={(e) => setSelectedUtxo(e.target.value)}>
                     <option value={''}>Pick UTXO to spend:</option>
-                    {address.transactions.map(utxo => {
+                    {address?.transactions.map(utxo => {
                       return <option key={utxo._id} value={utxo._id}>{(utxo.amount * 1e8).toLocaleString()}</option>
                     })}
                   </Form.Select>
@@ -202,7 +202,7 @@ const CreateTxModal = (props) => {
               <Row className='tx-info-inputs'>
                 {transaction.decodedTx.vin.map((input, index) => {
                   return (
-                    <Fragment key={index}>
+                    <Fragment key={input.txid}>
                       <h5>
                         Input {index + 1}
                         <InfoCircle

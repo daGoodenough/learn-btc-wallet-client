@@ -11,7 +11,6 @@ const WalletsList = () => {
   }
 
   const handleWalletClick = (walletId) => {
-    console.log(walletId)
     navigate(`/wallet/${walletId}`)
   }
 
