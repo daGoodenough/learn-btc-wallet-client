@@ -24,6 +24,10 @@ function App() {
       <TopNav />
       <Routes />
       <LearnPopUp />
+      <footer>
+        <a target="_blank" href="https://icons8.com/icon/89496/school" rel="noreferrer">School</a>
+        icon by <a target="_blank" href="https://icons8.com" rel="noreferrer">Icons8</a>
+      </footer>
     </div>
   );
 }

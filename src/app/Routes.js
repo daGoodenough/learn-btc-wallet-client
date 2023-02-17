@@ -11,7 +11,7 @@ const Router = () => {
     <Routes>
       <Route 
         exact
-        path='/wallet'
+        path='/'
         element={<Home/>}
       />
       <Route 
@@ -30,7 +30,7 @@ const Router = () => {
         element={<Signup/>}
       />
       <Route 
-        path='wallet/:walletId'
+        path='/wallet/:walletId'
         element={<WalletlPage/>}
       />
     </Routes>

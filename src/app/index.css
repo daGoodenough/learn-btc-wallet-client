@@ -16,6 +16,12 @@ body {
   color: var(--font1);
 }
 
+footer {
+  position: relative;
+  left: 90vw;
+  top: 33vh;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;

@@ -44,10 +44,10 @@ function Signup() {
                   <Form.Label>Password</Form.Label>
                   <Form.Control type="password" name="password" placeholder="Password" />
                 </Form.Group>
-                <Form.Group className="m-3">
+                {/* <Form.Group className="m-3">
                   <Form.Label>Confirm Password (<strong>Requires form validation</strong>)</Form.Label>
                   <Form.Control type="password" name="password" placeholder="Re-type password" />
-                </Form.Group>
+                </Form.Group> */}
                 <Button variant="primary" type="submit" className='align-self-center'>
                   Submit
                 </Button>
