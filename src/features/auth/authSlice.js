@@ -74,7 +74,8 @@ export const signup = (event, callback) => dispatch => {
       callback();
     })
     .catch((error) => {
-      dispatch(authError(error.response?.status || 400));
+      // dispatch(authError(error.response?.status || 400));
+      console.error(error);
     })
 }
 
@@ -90,7 +91,8 @@ export const fetchCurrentUser = () => dispatch => {
       dispatch(authUser(response.data))
     })
     .catch((error) => {
-      dispatch(authError(error.response?.status || 400))
+      // dispatch(authError(error.response?.status || 400))
+      console.error(error);
     })
 }
 
