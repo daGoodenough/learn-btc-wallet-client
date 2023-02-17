@@ -11,7 +11,7 @@ const LearnPage = () => {
 
   const handleGetStarted = () => {
     dispatch(changeLearnModal({modalShow: true, topic: 'intro'}));
-    navigate('/wallet');
+    navigate('/');
   }
 
   const handleTopicClick = (topic) => {

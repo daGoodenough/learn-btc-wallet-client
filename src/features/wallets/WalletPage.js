@@ -46,7 +46,7 @@ const WalletPage = () => {
           <Col><h3>{wallet.walletName || 'Address Name'}</h3></Col>
           <Col xs={1}className='justify-self-end'>
             <Trash3 
-              onClick={() => dispatch(deleteAddress(wallet._id, () => navigate('/wallet')))}
+              onClick={() => dispatch(deleteAddress(wallet._id, () => navigate('/')))}
               className='delete-icon' 
               size={20}
             />
