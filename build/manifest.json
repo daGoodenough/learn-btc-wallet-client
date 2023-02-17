@@ -1,0 +1,6 @@
+{
+  "short_name": "Learn BTC",
+  "name": "Learn Bitcoin Wallet",
+  "start_url": ".",
+  "display": "standalone"
+}
