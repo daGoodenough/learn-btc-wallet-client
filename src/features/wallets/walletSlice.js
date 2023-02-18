@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from 'axios';
-const BASE_URL = process.env.REACT_APP_API_HOST;
+// const BASE_URL = process.env.REACT_APP_API_HOST;
+const PORT = 5000;
 
 const initialState = [];
 
@@ -29,7 +30,7 @@ export const walletSlice = createSlice({
 
 export const fetchUserWallets = () => dispatch => {
   axios
-    .get(`${BASE_URL}/api/wallets`, {
+    .get(`:${PORT}/api/wallets`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`
       },
@@ -43,7 +44,7 @@ export const fetchUserWallets = () => dispatch => {
 export const createWallet = (addrType, keys, name) => dispatch => {
   axios
     .post(
-      `${BASE_URL}/api/wallets/${addrType}`,
+      `:${PORT}/api/wallets/${addrType}`,
       { keys, network: 'regtest', name },
       {
         headers: {
@@ -60,7 +61,7 @@ export const createWallet = (addrType, keys, name) => dispatch => {
 export const fundWallet = (addressId, callback) => dispatch => {
   axios
     .post(
-      `${BASE_URL}/api/transactions/fund-wallet`,
+      `:${PORT}/api/transactions/fund-wallet`,
       { addressId },
       {
         headers: {
@@ -78,7 +79,7 @@ export const fundWallet = (addressId, callback) => dispatch => {
 
 export const deleteAddress = (addressId, callback) => dispatch => {
   axios
-    .delete(`${BASE_URL}/api/wallets`, {
+    .delete(`:${PORT}/api/wallets`, {
       params: {
         id: addressId,
       },

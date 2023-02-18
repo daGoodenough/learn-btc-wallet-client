@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
-const BASE_URL = process.env.REACT_APP_API_HOST
+// const BASE_URL = process.env.REACT_APP_API_HOST
+const PORT = 5000;
 
 const initialState = {
   token: localStorage.getItem('token') || '',
@@ -40,7 +41,7 @@ export const localLogin = (event, callback) => dispatch => {
   const password = event.currentTarget[1].value
 
   axios
-    .post(`${BASE_URL}/auth/login`, {
+    .post(`:${PORT}/auth/login`, {
       email,
       password,
     })
@@ -63,7 +64,7 @@ export const signup = (event, callback) => dispatch => {
   const password = event.currentTarget ? event.currentTarget[2].value : event.password;
 
   axios
-    .post(`${BASE_URL}/auth/signup`, {
+    .post(`:${PORT}/auth/signup`, {
       email,
       username,
       password,
@@ -81,7 +82,7 @@ export const signup = (event, callback) => dispatch => {
 
 export const fetchCurrentUser = () => dispatch => {
   axios
-    .get(`${BASE_URL}/auth/current_user`, {
+    .get(`:${PORT}/auth/current_user`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`
       }

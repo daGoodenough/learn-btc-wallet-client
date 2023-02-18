@@ -1,9 +1,10 @@
 import axios from 'axios';
-const BASE_URL = process.env.REACT_APP_API_HOST;
+// const BASE_URL = process.env.REACT_APP_API_HOST;
+const PORT = 5000;
 
 export const createRawP2pkh = async (transactiondData) => {
   const transaction = await axios
-    .post(`${BASE_URL}/api/transactions/create-raw/p2pkh`,
+    .post(`:${PORT}/api/transactions/create-raw/p2pkh`,
       transactiondData,
       {
         headers: {
@@ -19,7 +20,7 @@ export const createRawP2pkh = async (transactiondData) => {
 
 export const broadcastTransaction = async (txHex) => {
   const txid = await axios
-    .post(`${BASE_URL}/api/transactions/broadcast`,
+    .post(`:${PORT}/api/transactions/broadcast`,
       { txHex },
       {
         headers: {
@@ -34,7 +35,7 @@ export const broadcastTransaction = async (txHex) => {
 
 export const fetchDecodedTx = async (txid) => {
   const tx = await axios
-    .get(`${BASE_URL}/api/transactions/raw`,
+    .get(`:${PORT}/api/transactions/raw`,
       { params: { txid } }
     )
     .then(response => response.data)
