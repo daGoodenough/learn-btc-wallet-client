@@ -30,7 +30,6 @@ const CreateTxModal = (props) => {
     setSelectedUtxo('');
     setValue(0);
     setTransaction({});
-    setBroadcasted({txid: '', value: null});
     setErrors({});
   }, [props.show]);
   

@@ -79,7 +79,7 @@ export const fundWallet = (addressId, callback) => dispatch => {
 
 export const deleteAddress = (addressId, callback) => dispatch => {
   axios
-    .delete(`${BASE_URL} /api/wallets`, {
+    .delete(`${BASE_URL}/api/wallets`, {
       params: {
         id: addressId,
       },
