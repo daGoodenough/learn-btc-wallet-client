@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
-// const BASE_URL = process.env.REACT_APP_API_HOST;
+const BASE_URL = process.env.REACT_APP_API_HOST;
 const  PORT = 5000
 
 const initialState = [];
@@ -21,7 +21,7 @@ export const keySlice = createSlice({
 
 export const fetchUserKeys = () => dispatch => {
   axios
-    .get(`:${PORT}/api/keys`, {
+    .get(`${BASE_URL}:${PORT}/api/keys`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`
       }
@@ -35,7 +35,7 @@ export const saveKeyPair =
   (keyName, privateKey, wif, publicKey, compressed, callback) =>
     dispatch => {
       axios
-        .post(`:${PORT}/api/keys`, {
+        .post(`${BASE_URL}:${PORT}/api/keys`, {
           keyName,
           privateKey,
           wif,
