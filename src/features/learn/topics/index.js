@@ -11,6 +11,7 @@ import wif from './wif';
 import noData from './noData';
 import step2 from './step2';
 import step3 from './step3';
+import singleOrMulti from './singleOrMulti';
 
 const topics = {
   privateKey,
@@ -26,6 +27,7 @@ const topics = {
   noData,
   step2,
   step3,
+  singleOrMulti,
 };
 
 export default topics

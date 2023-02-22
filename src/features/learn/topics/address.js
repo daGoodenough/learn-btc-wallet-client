@@ -8,7 +8,7 @@ This address is related to your public and private key pair. As long as you are 
 
 Addresses are [base85check encoded](https://en.bitcoin.it/wiki/Base58Check_encoding), which means they are more readable and come with information about the key pair use to create that address.
 
-##### To get started understanding what an address is, you will first need to create a private and public key.
+##### To **get started** understanding what an address is, you will first need to *create a private and public key*.
 `;
 
 export default address;
