@@ -46,4 +46,20 @@
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
   </body>
+
+  <script>
+    window.MashSettings = {
+      id: "342253bd-b9c4-4e58-b4e3-73253803cbd4",
+    };
+    var loader = function () {
+      window.Mash.init();
+    };
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.defer = true;
+    script.onload = loader;
+    script.src = "https://wallet.getmash.com/sdk/sdk.js";
+    var head = document.getElementsByTagName("head")[0];
+    head.appendChild(script);
+  </script>
 </html>
