@@ -108,7 +108,7 @@ const CreateWalletModal = (props) => {
               <h5>Step 2: Key(s)
                 <InfoCircle
                   color='#0d6efd'
-                  onClick={() => handleInfoClick('singleOrMulti')}
+                  onClick={() => handleInfoClick('keySelection')}
                 />
               </h5>
               <Form.Select aria-label="select keys">

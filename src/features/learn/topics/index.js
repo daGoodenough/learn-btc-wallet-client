@@ -12,6 +12,10 @@ import noData from './noData';
 import step2 from './step2';
 import step3 from './step3';
 import singleOrMulti from './singleOrMulti';
+import keySelection from './keySelection';
+import addressTypes from './addressTypes.js';
+import generatePublicKey from './generatePublicKey';
+import generatePrivateKey from './generatePrivateKey';
 
 const topics = {
   privateKey,
@@ -28,6 +32,10 @@ const topics = {
   step2,
   step3,
   singleOrMulti,
+  keySelection,
+  addressTypes,
+  generatePublicKey,
+  generatePrivateKey,
 };
 
 export default topics
