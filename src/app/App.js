@@ -6,6 +6,7 @@ import { fetchCurrentUser } from '../features/auth/authSlice';
 import { fetchUserKeys } from '../features/keys/keySlice';
 import { fetchUserWallets } from '../features/wallets/walletSlice';
 import LearnPopUp from '../features/learn/LearnPopUp';
+import Footer from './Footer';
 
 function App() {
   const dispatch = useDispatch();
@@ -24,10 +25,7 @@ function App() {
       <TopNav />
       <Routes />
       <LearnPopUp />
-      <footer>
-        <a target="_blank" href="https://icons8.com/icon/89496/school" rel="noreferrer">School</a>
-        icon by <a target="_blank" href="https://icons8.com" rel="noreferrer">Icons8</a>
-      </footer>
+      <Footer />
     </div>
   );
 }

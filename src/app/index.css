@@ -14,12 +14,11 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background-color: var(--background);
   color: var(--font1);
+  height: 120vh;
 }
 
 footer {
-  position: relative;
-  left: 90vw;
-  top: 33vh;
+  text-align: end;
 }
 
 code {
