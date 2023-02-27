@@ -84,6 +84,10 @@ const CreateTxModal = (props) => {
       }, 2000);
     }
     catch (error) {
+      if (error.message === 'dust') {
+        error.message = "Attempting to spend dust. Fee is higher than transaction amount. See the learn page for more info";
+      }
+
       setBroadcasted({
         txid: '',
         value: null,
